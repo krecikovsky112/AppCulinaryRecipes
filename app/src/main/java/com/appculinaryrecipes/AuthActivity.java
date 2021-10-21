@@ -34,19 +34,11 @@ public class AuthActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private static final String TAG = "GOOGLE_SIGN_IN_TAG";
 
-    private Button normalSingInButton;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityAuthBinding = DataBindingUtil.setContentView(this, R.layout.activity_auth);
-
-        normalSingInButton =  (Button) findViewById(R.id.normalSignInButton);
-        usernameEditText = (EditText) findViewById(R.id.inputEmailText);
-        passwordEditText = (EditText) findViewById(R.id.editTextPassword);
-
+        activityAuthBinding.setCallback(this);
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,12 +63,6 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-        normalSingInButton.setOnClickListener(v -> {
-            System.out.println("#email: " + usernameEditText.getText().toString());
-            System.out.println("#pass: " + passwordEditText.getText().toString());
-            firebaseLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-        });
 
         activityAuthBinding.signInButton.setOnClickListener(v -> {
             Intent intent = googleSignInClient.getSignInIntent();
@@ -117,5 +103,13 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void onSubmit() {
+        if (!activityAuthBinding.inputEmailText.getText().toString().isEmpty() &&
+                !activityAuthBinding.editTextPassword.getText().toString().isEmpty()) {
+            firebaseLogin(activityAuthBinding.inputEmailText.getText().toString(), activityAuthBinding.editTextPassword.getText().toString());
+        }
+
     }
 }
