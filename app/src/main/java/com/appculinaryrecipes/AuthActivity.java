@@ -112,4 +112,9 @@ public class AuthActivity extends AppCompatActivity {
         }
 
     }
+
+    public void onSignUpTextClick(){
+        //TODO: zaimplementować przełączanie się między widokami. Nie wiedziałem czy robimy na fragmentach czy przechodzimy przez Bundle normalnie
+
+    }
 }
