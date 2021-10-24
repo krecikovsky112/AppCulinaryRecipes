@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class AuthActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity implements CallbackFragment {
     Fragment fragment;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -22,10 +22,25 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     public void addFragment(){
-        fragment = new FragmentLogin();
+        FragmentLogin fragment = new FragmentLogin();
+        fragment.setCallbackFragment(this);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer,fragment);
         fragmentTransaction.commit();
+    }
+
+    public void replaceFragment(){
+        fragment = new FragmentRegister();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fragmentContainer,fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void changeFragment() {
+        replaceFragment();
     }
 }

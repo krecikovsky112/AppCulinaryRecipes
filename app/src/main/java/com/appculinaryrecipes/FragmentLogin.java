@@ -1,8 +1,11 @@
 package com.appculinaryrecipes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +38,12 @@ public class FragmentLogin extends Fragment {
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth firebaseAuth;
     private static final String TAG = "GOOGLE_SIGN_IN_TAG";
+    CallbackFragment callbackFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        loginFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.login_fragment,container,false);
+        loginFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false);
         loginFragmentBinding.setCallback(this);
         View view = loginFragmentBinding.getRoot();
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
@@ -92,7 +96,7 @@ public class FragmentLogin extends Fragment {
                 });
     }
 
-    private void firebaseLogin(String email, String password){
+    private void firebaseLogin(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -114,8 +118,13 @@ public class FragmentLogin extends Fragment {
 
     }
 
-    public void onSignUpTextClick(){
-        //TODO: zaimplementować przełączanie się między widokami. Nie wiedziałem czy robimy na fragmentach czy przechodzimy przez Bundle normalnie
+    public void onSignUpTextClick() {
+        if (callbackFragment != null) {
+            callbackFragment.changeFragment();
+        }
+    }
 
+    public void setCallbackFragment(CallbackFragment callbackFragment){
+        this.callbackFragment = callbackFragment;
     }
 }
