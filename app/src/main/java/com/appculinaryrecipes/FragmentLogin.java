@@ -53,7 +53,7 @@ public class FragmentLogin extends Fragment {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(getActivity().getApplicationContext(), googleSignInOptions);
         firebaseAuth = FirebaseAuth.getInstance();
-//        checkUser();
+        checkUser();
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
