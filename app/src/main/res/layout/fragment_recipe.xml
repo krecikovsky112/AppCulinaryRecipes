@@ -5,10 +5,84 @@
     android:layout_height="match_parent"
     tools:context=".RecipeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="20dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="recipe name"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="category"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextYoutube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="60dp"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="youtube"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="60dp"
+            android:ems="10"
+            android:lines="10"
+            android:inputType="textMultiLine"
+            android:hint="instructions"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="340dp"
+            android:ems="10"
+            android:hint="area"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/addRecipeSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginEnd="200dp"
+            android:text="Submit" />
+
+
+    </RelativeLayout>
 
 </FrameLayout>
