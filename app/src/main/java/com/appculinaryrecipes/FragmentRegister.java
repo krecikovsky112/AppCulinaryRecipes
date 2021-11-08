@@ -1,6 +1,7 @@
 package com.appculinaryrecipes;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,21 @@ import androidx.fragment.app.Fragment;
 
 import com.appculinaryrecipes.databinding.RegisterFragmentBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FragmentRegister extends Fragment {
     private RegisterFragmentBinding registerFragmentBinding;
     private FirebaseAuth firebaseAuth;
+    String userID;
+    private FirebaseFirestore fstore;
 
     @Nullable
     @Override
@@ -28,6 +37,7 @@ public class FragmentRegister extends Fragment {
         registerFragmentBinding.setCallback(this);
         View view = registerFragmentBinding.getRoot();
         firebaseAuth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
         return view;
     }
 
@@ -56,6 +66,18 @@ public class FragmentRegister extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(),"Registering user succesfull", Toast.LENGTH_SHORT).show();
+                    userID = firebaseAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference = fstore.collection("users").document(userID);
+                    Map<String,Object> user = new HashMap<>();
+                    user.put("fullname",registerFragmentBinding.inputFullnameText.getText().toString());
+                    user.put("email",registerFragmentBinding.inputEmailText.getText().toString());
+                    user.put("password",registerFragmentBinding.editTextPassword.getText().toString());
+                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("TAG","onSuccess: user Profile is created for " + userID);
+                        }
+                    });
                 }
                 else
                 {
