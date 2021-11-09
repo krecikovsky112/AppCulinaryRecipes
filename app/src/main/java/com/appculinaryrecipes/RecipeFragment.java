@@ -121,7 +121,7 @@ public class RecipeFragment extends Fragment {
                 docData.put("indigrients", Arrays.asList(ingredients.toArray()));
                 docData.put("measures", Arrays.asList(measures.toArray()));
 
-                database.collection("recipes").document("test").set(docData);
+                database.collection("recipes").document(editTextMeal.getText().toString()).set(docData);
                 Fragment fragment = new HomeFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentHomeContainer,
