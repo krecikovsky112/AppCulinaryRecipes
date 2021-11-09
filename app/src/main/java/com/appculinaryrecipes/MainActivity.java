@@ -50,13 +50,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(int i) {
                 Fragment fragment = null;
-                switch (i){
-                    case R.id.home:
-                        fragment = new HomeFragment();
-                        break;
-                    case R.id.creator:
-                        fragment = new RecipeFragment();
-                        break;
+                if(i == R.id.home)
+                    fragment = new HomeFragment();
+                else if(i == R.id.creator){
+                    checkUser();
+                    fragment = new RecipeFragment();
                 }
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentHomeContainer,
