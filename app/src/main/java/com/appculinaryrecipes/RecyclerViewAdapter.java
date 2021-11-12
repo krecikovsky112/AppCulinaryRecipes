@@ -1,6 +1,7 @@
 package com.appculinaryrecipes;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         holder.itemView.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            RecipeFragment myFragment = new RecipeFragment();
+            RecipeFragment myFragment= RecipeFragment.newInstance(recipe.getTitle(),recipe.getImageURL());
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("okj").commit();
         });
     }
