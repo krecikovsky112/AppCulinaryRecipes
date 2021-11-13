@@ -3,6 +3,7 @@ package com.appculinaryrecipes;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
 import com.google.firebase.firestore.DocumentReference;
@@ -114,6 +114,23 @@ public class RecipeFragment extends Fragment {
                 String instruction = document.getString("instructions");
                 setInstuctionTextView(instruction);
 
+                //TODO: Do poprawy załączanie filmu z youtube, pokazuje "No Network Security Config specified"
+//                String urlVideo = document.getString("youtube");
+//                assert urlVideo != null;
+//                char[] temp = urlVideo.toCharArray();
+//                String result = null;
+//                for (int i = temp.length - 1; i > 0; i--)
+//                    if (temp[i] == '='){
+//                        result = urlVideo.substring(i, temp.length);
+//                    }
+//                    getLifecycle().addObserver(fragmentRecipeBinding.videoView);
+//                String finalResult = result;
+//                fragmentRecipeBinding.videoView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//                        @Override
+//                        public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+//                            youTubePlayer.loadVideo(finalResult,0);
+//                        }
+//                    });
             } else {
                 System.out.println("get failed with " + task.getException());
             }
@@ -132,12 +149,12 @@ public class RecipeFragment extends Fragment {
 
         textView = new TextView(getActivity());
         textView.setTextSize(25);
-
-        textView.setTextColor(Color.parseColor("#FFFFFF"));
-        textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        textView.setPadding(100, 0, 100, 0);
+        textView.setTextColor(Color.parseColor("#ae0216"));
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
         textView.setTypeface(face);
         textView.setText(instruction);
-        textView.setBackgroundResource(R.drawable.background_instruction);
+//        textView.setBackgroundResource(R.drawable.background_instruction);
         fragmentRecipeBinding.container.addView(textView);
     }
 }

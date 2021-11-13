@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:padding="20dp"
         tools:context=".FragmentRegister"
-        android:background="#ffefef">
+        android:background="@drawable/background_register">
 
 
         <com.google.android.material.textfield.TextInputLayout

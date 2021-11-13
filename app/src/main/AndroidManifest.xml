@@ -11,7 +11,8 @@
         android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCulinaryRecipes">
+        android:theme="@style/Theme.AppCulinaryRecipes"
+        >
         <activity android:name=".AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
