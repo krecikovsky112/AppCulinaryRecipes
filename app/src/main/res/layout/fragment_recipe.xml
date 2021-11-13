@@ -50,7 +50,6 @@
                     android:adjustViewBounds="true"
                     app:shapeAppearanceOverlay="@style/roundimageview"
                     />
-
 <!--            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView-->
 <!--                    android:id="@+id/videoView"-->
 <!--                    app:showFullScreenButton="true"-->
