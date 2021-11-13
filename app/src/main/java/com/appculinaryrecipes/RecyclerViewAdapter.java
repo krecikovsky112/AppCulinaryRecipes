@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         holder.itemView.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            RecipeFragment myFragment= RecipeFragment.newInstance(recipe.getTitle(),recipe.getImageURL());
+            RecipeFragment myFragment= RecipeFragment.newInstance(recipe.getTitle(),recipe.getImageURL(),recipe.getId());
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("okj").commit();
         });
     }

@@ -107,10 +107,12 @@ public class HomeFragment extends Fragment {
                             Map<String, Object> data = document.getData();
                             String meal = (String) data.get("meal");
                             String mealThumb = (String) data.get("mealThumb");
+                            String id = document.getId();
                             if ((meal != null) && (mealThumb != null)) {
                                 Recipe recipe = new Recipe();
                                 recipe.setImageURL(mealThumb);
                                 recipe.setTitle(meal);
+                                recipe.setId(id);
                                 a.add(recipe);
                             }
                         }
