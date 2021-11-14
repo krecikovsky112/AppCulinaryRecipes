@@ -17,7 +17,7 @@
             android:elevation="16dp"
             android:padding="8dp"
             app:cnb_menuResource="@menu/menu_bottom"
-            app:cnb_unselectedColor="@color/white" />
+            app:cnb_unselectedColor="#ffefef" />
 
         <FrameLayout
             android:id="@+id/fragmentHomeContainer"
