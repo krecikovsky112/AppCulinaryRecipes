@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //            firebaseAuth.signOut();
 //            checkUser();
 //        });
+        activityMainBinding.navigationBar.setItemSelected(R.id.home,true);
 
         HomeFragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

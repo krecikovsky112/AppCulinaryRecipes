@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="20dp"
-            tools:context=".FragmentLogin">
+            tools:context=".FragmentLogin"
+            android:background="@drawable/background_login">
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/signInButton"
@@ -40,6 +41,11 @@
                 android:layout_marginTop="270dp"
                 android:layout_marginEnd="20dp"
                 android:hint="email"
+                app:boxStrokeWidth="0dp"
+                app:boxCornerRadiusBottomStart="25dp"
+                app:boxCornerRadiusBottomEnd="25dp"
+                app:boxCornerRadiusTopEnd="25dp"
+                app:boxCornerRadiusTopStart="25dp"
                 app:boxBackgroundColor="@color/white"
                 app:startIconDrawable="@drawable/user">
 
@@ -61,11 +67,16 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:hint="password"
+                app:boxCornerRadiusBottomStart="25dp"
+                app:boxCornerRadiusBottomEnd="25dp"
+                app:boxCornerRadiusTopEnd="25dp"
+                app:boxCornerRadiusTopStart="25dp"
                 app:boxBackgroundColor="@color/white"
                 app:endIconMode="password_toggle"
+                app:boxStrokeWidth="0dp"
                 app:startIconDrawable="@drawable/padlock">
 
                 <com.google.android.material.textfield.TextInputEditText

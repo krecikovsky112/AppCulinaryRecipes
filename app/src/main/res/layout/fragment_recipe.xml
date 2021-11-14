@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RecipeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="callback"
+            type="com.appculinaryrecipes.RecipeFragment" />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".RecipeFragment"
+        android:background="#ffefef">
 
-</FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/background_all_acivity">
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffefef">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/favBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ic_baseline_favorite_border_24"
+                        android:onClick='@{() -> callback.onClickLike()}' />
+
+                    <TextView
+                        android:id="@+id/titleRecipe"
+                        android:layout_width="200dp"
+                        android:layout_height="70dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="80dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="80dp"
+                        android:fontFamily="@font/dongle_regular"
+                        android:textAlignment="center"
+                        android:textColor="#ae0216"
+                        android:textSize="60sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/generatorList"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/list"
+                        android:onClick='@{() -> callback.onClickGenerateList()}' />
+                </RelativeLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp" />
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

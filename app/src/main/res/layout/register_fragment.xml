@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
-        tools:context=".FragmentRegister">
+        tools:context=".FragmentRegister"
+        android:background="@drawable/background_register">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -27,6 +28,11 @@
             android:layout_marginTop="270dp"
             android:layout_marginEnd="20dp"
             android:hint="fullname"
+            app:boxStrokeWidth="0dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
             app:boxBackgroundColor="@color/white"
             app:startIconDrawable="@drawable/idcard">
 
@@ -42,6 +48,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
+            app:boxStrokeWidth="0dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textField4"
@@ -49,7 +60,7 @@
 
             android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:hint="email"
             app:boxBackgroundColor="@color/white"
@@ -67,13 +78,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField2"
+            app:boxStrokeWidth="0dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textField"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:hint="password"
             app:boxBackgroundColor="@color/white"
@@ -94,13 +110,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField3"
+            app:boxStrokeWidth="0dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textField2"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:hint="confirm password"
             app:boxBackgroundColor="@color/white"

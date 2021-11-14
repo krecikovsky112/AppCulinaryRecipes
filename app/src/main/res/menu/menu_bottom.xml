@@ -7,31 +7,31 @@
         android:title="Home"
         android:icon="@drawable/home"
         app:cnb_backgroundColor="#ae0216"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"
+        app:cnb_iconColor="#ffefef"
+        app:cnb_textColor="#ffefef"
         />
     <item
         android:id="@+id/creator"
         android:title="Creator"
         android:icon="@drawable/pencil"
         app:cnb_backgroundColor="#ae0216"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"
+        app:cnb_iconColor="#ffefef"
+        app:cnb_textColor="#ffefef"
         />
     <item
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/search"
         app:cnb_backgroundColor="#ae0216"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"
+        app:cnb_iconColor="#ffefef"
+        app:cnb_textColor="#ffefef"
         />
     <item
         android:id="@+id/favorites"
         android:title="Favorites"
         android:icon="@drawable/heart"
         app:cnb_backgroundColor="#ae0216"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"
+        app:cnb_iconColor="#ffefef"
+        app:cnb_textColor="#ffefef"
         />
 </menu>
