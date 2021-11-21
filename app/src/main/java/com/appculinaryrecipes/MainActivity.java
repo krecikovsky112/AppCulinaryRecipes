@@ -1,10 +1,17 @@
 package com.appculinaryrecipes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,6 +19,8 @@ import com.appculinaryrecipes.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
+import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +40,25 @@ public class MainActivity extends AppCompatActivity {
 //            checkUser();
 //        });
         activityMainBinding.navigationBar.setItemSelected(R.id.home,true);
+        activityMainBinding.navigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                Fragment fragment = null;
+                switch (i){
+                    case R.id.creator:
+                        checkUser();
+                        fragment = new AddRecipeFragment();
+                        break;
+                    case R.id.home:
+                    default:
+                        fragment = new HomeFragment();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentHomeContainer,
+                                fragment).commit();
+            }
+        });
 
         HomeFragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -38,6 +66,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragmentHomeContainer, fragment);
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            Uri selectedImageUri = data.getData();
+            Bitmap b = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri));
+            ImageView imageViewUpload = findViewById(R.id.imageViewUpload);
+            TextView textView = findViewById(R.id.editTextMealThumb);
+            textView.setText(selectedImageUri.toString());
+            imageViewUpload.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this.getApplicationContext(), "Resource not found!", Toast.LENGTH_SHORT);
+        }
     }
 
     private void checkUser() {
