@@ -36,9 +36,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class AddRecipeFragment extends Fragment {
 
@@ -48,7 +50,6 @@ public class AddRecipeFragment extends Fragment {
 
     private final int MAX_RESULTS = 20;
     private final String YOUTUBE_VIDEO_URL_BASE = "https://www.youtube.com/watch?v=";
-
     private final String YOUTUBE_RESOURCE_TYPE = "video";
     private final String YOUTUBE_DATA_API_RESOURCE_PROPERTY = "snippet";
     private final String YOUTUBE_DATA_API_BASE_URL = "https://www.googleapis.com/youtube/v3/search";
@@ -113,7 +114,7 @@ public class AddRecipeFragment extends Fragment {
                     @Override
                     public void onClick(View v){
                         search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
-                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part="+ YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults="+ MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + YOUTUBE_DATA_API_KEY;
+                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part="+ YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults="+ MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + R.string.youtubeDataApiKey;
                         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
                         queue.add(stringRequest);
                     }
