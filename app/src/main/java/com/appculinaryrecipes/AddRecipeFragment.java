@@ -48,7 +48,7 @@ public class AddRecipeFragment extends Fragment {
 
     private final int MAX_RESULTS = 20;
     private final String YOUTUBE_VIDEO_URL_BASE = "https://www.youtube.com/watch?v=";
-    private final String YOUTUBE_DATA_API_KEY = "AIzaSyB7WrgiYjC4dlesqkUuWxQ43XNAAU72ci0";
+
     private final String YOUTUBE_RESOURCE_TYPE = "video";
     private final String YOUTUBE_DATA_API_RESOURCE_PROPERTY = "snippet";
     private final String YOUTUBE_DATA_API_BASE_URL = "https://www.googleapis.com/youtube/v3/search";
