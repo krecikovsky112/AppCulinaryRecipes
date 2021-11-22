@@ -2,12 +2,15 @@ package com.appculinaryrecipes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +29,14 @@ import com.android.volley.toolbox.Volley;
 import com.appculinaryrecipes.databinding.FragmentAddRecipeBinding;
 import com.appculinaryrecipes.youtube.search.Response;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,6 +61,10 @@ public class AddRecipeFragment extends Fragment {
     private final String YOUTUBE_DATA_API_BASE_URL = "https://www.googleapis.com/youtube/v3/search";
     private final String COLLECTION_PATH = "recipes";
     private final String UPLOAD_FIRESTORE_STORAGE_DIRECTORY = "images/";
+    private final String API_KEYS_COLLECTION_NAME = "api_keys";
+    private final String API_KEYS_DOCUMENT_NAME = "youtube_data_api";
+
+    private String youtubeDataApiKey;
 
     public AddRecipeFragment() {
     }
@@ -69,10 +81,12 @@ public class AddRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentAddRecipeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_recipe, container, false);;
+        fragmentAddRecipeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_recipe, container, false);
         View view = fragmentAddRecipeBinding.getRoot();
 
         Context context = this.getContext();
+
+        fetchApiKey(API_KEYS_COLLECTION_NAME, API_KEYS_DOCUMENT_NAME);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -88,7 +102,11 @@ public class AddRecipeFragment extends Fragment {
                                 Response youtubeSearchResponse = gson.fromJson(response, Response.class);
                                 ImageView imageView = new ImageView(context);
                                 TextView textView = new TextView(context);
-                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).into(imageView);
+                                CircularProgressDrawable drawable = new CircularProgressDrawable(context);
+                                drawable.setStrokeWidth(5f);
+                                drawable.setCenterRadius(30f);
+                                drawable.start();
+                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).placeholder(drawable).into(imageView);
                                 textView.setText(youtubeSearchResponse.getItem(i).getSnippet().getTitle());
                                 final String videoURL = YOUTUBE_VIDEO_URL_BASE + youtubeSearchResponse.getItem(i).getId().getVideoId();
                                 imageView.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +130,7 @@ public class AddRecipeFragment extends Fragment {
                     @Override
                     public void onClick(View v){
                         search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
-                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part="+ YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults="+ MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + R.string.youtubeDataApiKey;
+                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part="+ YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults="+ MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
                         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
                         queue.add(stringRequest);
                     }
@@ -236,5 +254,19 @@ public class AddRecipeFragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentHomeContainer,
                         fragment).commit();
+    }
+
+    public void fetchApiKey(String collectionName, String documentName){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection(collectionName).document(documentName);
+        documentReference.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                DocumentSnapshot snapshot = task.getResult();
+                youtubeDataApiKey = snapshot.getString("key");
+            }
+            else{
+                Toast.makeText(this.getContext(), "Youtube connection failed!", Toast.LENGTH_SHORT);
+            }
+        });
     }
 }
