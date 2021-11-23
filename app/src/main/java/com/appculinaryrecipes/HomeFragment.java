@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ public class HomeFragment extends Fragment {
     private String key = null;
     private DocumentSnapshot lastResult = null;
     private FragmentHomeBinding fragmentHomeBinding;
+    private Button button;
 
     public HomeFragment() {
     }
@@ -55,6 +58,7 @@ public class HomeFragment extends Fragment {
         View view = fragmentHomeBinding.getRoot();
         recyclerView = fragmentHomeBinding.homeRecyclerView;
         swipeRefreshLayout = fragmentHomeBinding.homeSwipeRefreshLayout;
+        button = fragmentHomeBinding.goToSearchFragmentButton;
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -78,6 +82,13 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        button.setOnClickListener(v -> {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            SearchFragment myFragment= new SearchFragment();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("okj").commit();
+        });
+
         return view;
     }
 
@@ -98,7 +109,7 @@ public class HomeFragment extends Fragment {
                     .limit(PAGE_ITEM_SIZE);
         }
 
-
+        
         query
                 .get()
                 .addOnCompleteListener(task -> {
@@ -110,9 +121,12 @@ public class HomeFragment extends Fragment {
                             String id = document.getId();
                             if ((meal != null) && (mealThumb != null)) {
                                 Recipe recipe = new Recipe();
-                                recipe.setImageURL(mealThumb);
-                                recipe.setTitle(meal);
+                                recipe.setMealThumb(mealThumb);
+                                recipe.setMeal(meal);
                                 recipe.setId(id);
+                                recipe.setArea((String)data.get("area"));
+                                recipe.setCategory((String)data.get("category"));
+                                recipe.setRating((String)data.get("rating"));
                                 a.add(recipe);
                             }
                         }

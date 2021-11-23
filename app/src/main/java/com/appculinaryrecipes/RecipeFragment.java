@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,7 @@ public class RecipeFragment extends Fragment {
                 assert urlVideo != null;
                 setYoutubePlayer(urlVideo);
             } else {
-                System.out.println("get failed with " + task.getException());
+                Log.w("ERROR", "get failed with " + task.getException());
             }
         });
     }
