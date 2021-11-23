@@ -2,4 +2,14 @@
     <string name="app_name">AppCulinaryRecipes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="submit">Submit</string>
+    <string name="add_ingredient">add ingredient</string>
+    <string name="load_image">load image</string>
+    <string name="area">area</string>
+    <string name="instructions">instructions</string>
+    <string name="search">Search</string>
+    <string name="search_below">paste youtube link or search below</string>
+    <string name="thumbnail_picture">Thumbnail picture</string>
+    <string name="category">category</string>
+    <string name="recipe_name">recipe name</string>
 </resources>
