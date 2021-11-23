@@ -1,39 +1,31 @@
 package com.appculinaryrecipes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.FirebaseFunctionsException;
-import com.google.gson.Gson;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private ActivityMainBinding activityMainBinding;
-    private FirebaseFunctions mFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +39,24 @@ public class MainActivity extends AppCompatActivity {
 //            firebaseAuth.signOut();
 //            checkUser();
 //        });
-        activityMainBinding.navigationBar.setItemSelected(R.id.home, true);
-        activityMainBinding.navigationBar.setOnItemSelectedListener(i -> {
-            if (i == R.id.search) {
-                SearchFragment searchFragment = new SearchFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, searchFragment).addToBackStack("ok").commit();
-            } else if (i == R.id.home) {
-                HomeFragment fragment = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
+        activityMainBinding.navigationBar.setItemSelected(R.id.home,true);
+        activityMainBinding.navigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                Fragment fragment = null;
+                switch (i){
+                    case R.id.creator:
+                        checkUser();
+                        fragment = new AddRecipeFragment();
+                        break;
+                    case R.id.home:
+                    default:
+                        fragment = new HomeFragment();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentHomeContainer,
+                                fragment).commit();
             }
         });
 
@@ -64,6 +66,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragmentHomeContainer, fragment);
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            Uri selectedImageUri = data.getData();
+            Bitmap b = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri));
+            ImageView imageViewUpload = findViewById(R.id.imageViewUpload);
+            TextView textView = findViewById(R.id.editTextMealThumb);
+            textView.setText(selectedImageUri.toString());
+            imageViewUpload.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this.getApplicationContext(), "Resource not found!", Toast.LENGTH_SHORT);
+        }
     }
 
     private void checkUser() {
