@@ -5,12 +5,12 @@
     <data>
         <variable
             name="callback"
-            type="com.appculinaryrecipes.RecipeFragment" />
+            type="com.appculinaryrecipes.fragments.RecipeFragment" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".RecipeFragment"
+        tools:context=".fragments.RecipeFragment"
         android:background="#ffefef">
 
         <ScrollView

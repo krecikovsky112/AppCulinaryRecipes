@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.appculinaryrecipes.R;
+import com.appculinaryrecipes.Recipe;
+import com.appculinaryrecipes.RecyclerViewAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         lastResult = null;
-        fragmentHomeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
+        fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = fragmentHomeBinding.getRoot();
         recyclerView = fragmentHomeBinding.homeRecyclerView;
         swipeRefreshLayout = fragmentHomeBinding.homeSwipeRefreshLayout;
@@ -86,7 +89,7 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(v -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             SearchFragment myFragment= new SearchFragment();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("okj").commit();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("HOME_FRAGMENT").commit();
         });
 
         return view;
@@ -94,7 +97,7 @@ public class HomeFragment extends Fragment {
 
     private void leadData() {
         swipeRefreshLayout.setRefreshing(true);
-        ArrayList<Recipe> a = new ArrayList<>();
+        ArrayList<Recipe> recipeArrayList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query;
 
@@ -127,12 +130,12 @@ public class HomeFragment extends Fragment {
                                 recipe.setArea((String)data.get("area"));
                                 recipe.setCategory((String)data.get("category"));
                                 recipe.setRating((String)data.get("rating"));
-                                a.add(recipe);
+                                recipeArrayList.add(recipe);
                             }
                         }
 
                         if (task.getResult().size() > 0) {
-                            recyclerViewAdapter.setItems(a);
+                            recyclerViewAdapter.setItems(recipeArrayList);
                             recyclerViewAdapter.notifyDataSetChanged();
                             lastResult = task.getResult().getDocuments().get(task.getResult().size() - 1);
                         }
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment {
                         isLoading = false;
                         swipeRefreshLayout.setRefreshing(false);
                     } else {
-                        Log.w("XD", "Error getting documents.", task.getException());
+                        Log.w("EXCEPTION", "Error getting documents.", task.getException());
                     }
                 });
     }

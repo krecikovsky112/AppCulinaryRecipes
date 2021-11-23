@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.appculinaryrecipes.R;
+import com.appculinaryrecipes.Recipe;
+import com.appculinaryrecipes.RecyclerViewAdapter;
 import com.appculinaryrecipes.databinding.FragmentSearchBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +34,12 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchFragment extends Fragment {
+
+    public List<String> categories = new LinkedList<>(Arrays.asList("Beef", "Breakfast", "Chicken", "Dessert", "Goat", "Lamb",
+            "Miscellaneous", "Pasta", "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian"));
+    public List<String> areas = new LinkedList<>(Arrays.asList("American", "British", "Canadian", "Chinese", "Croatian",
+            "Dutch", "Egyptian", "French", "Greek", "Indian", "Irish", "Italian", "Jamaican", "Japanese", "Kenyan",
+            "Malaysian", "Mexican", "Moroccan", "Polish", "Portuguese", "Russian", "Spanish", "Thai", "Tunisian", "Turkish", "Unknown", "Vietnamese"));
 
     private FragmentSearchBinding fragmentSearchBinding;
     private RecyclerView recyclerView;
@@ -82,11 +91,6 @@ public class SearchFragment extends Fragment {
         });
 
         NiceSpinner areaSpinner = (NiceSpinner) fragmentSearchBinding.areaSpinner;
-        List<String> categories = new LinkedList<>(Arrays.asList("Beef", "Breakfast", "Chicken", "Dessert", "Goat", "Lamb",
-                "Miscellaneous", "Pasta", "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian"));
-        List<String> areas = new LinkedList<>(Arrays.asList("American", "British", "Canadian", "Chinese", "Croatian",
-                "Dutch", "Egyptian", "French", "Greek", "Indian", "Irish", "Italian", "Jamaican", "Japanese", "Kenyan",
-                "Malaysian", "Mexican", "Moroccan", "Polish", "Portuguese", "Russian", "Spanish", "Thai", "Tunisian", "Turkish", "Unknown", "Vietnamese"));
 
         selectedCategory = categories.get(0);
         selectedArea = areas.get(0);
@@ -133,7 +137,7 @@ public class SearchFragment extends Fragment {
                                     recyclerViewAdapter.getRecipeArrayList().clear();
                                 }
 
-                                ArrayList<Recipe> a = new ArrayList<>();
+                                ArrayList<Recipe> recipeArrayList = new ArrayList<>();
                                 for (Recipe recipeItem : recipesArray) {
 
                                     Recipe recipe = new Recipe();
@@ -143,10 +147,10 @@ public class SearchFragment extends Fragment {
                                     recipe.setCategory(recipeItem.getCategory());
                                     recipe.setRating(recipeItem.getRating());
                                     recipe.setArea(recipeItem.getArea());
-                                    a.add(recipe);
+                                    recipeArrayList.add(recipe);
                                 }
 
-                                recyclerViewAdapter.setItems(a);
+                                recyclerViewAdapter.setItems(recipeArrayList);
                                 recyclerViewAdapter.notifyDataSetChanged();
                                 swipeRefreshLayout.setRefreshing(false);
 

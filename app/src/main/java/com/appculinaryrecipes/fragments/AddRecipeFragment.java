@@ -1,17 +1,9 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,24 +14,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentAddRecipeBinding;
 import com.appculinaryrecipes.youtube.search.Response;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
@@ -81,7 +74,7 @@ public class AddRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentAddRecipeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_recipe, container, false);
+        fragmentAddRecipeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_recipe, container, false);
         View view = fragmentAddRecipeBinding.getRoot();
 
         Context context = this.getContext();
@@ -91,8 +84,7 @@ public class AddRecipeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         com.android.volley.Response.Listener<String> listener =
-                new com.android.volley.Response.Listener<String>()
-                {
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -125,12 +117,11 @@ public class AddRecipeFragment extends Fragment {
                 };
 
         fragmentAddRecipeBinding.searchButton.setOnClickListener(
-                new View.OnClickListener()
-                {
+                new View.OnClickListener() {
                     @Override
-                    public void onClick(View v){
+                    public void onClick(View v) {
                         search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
-                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part="+ YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults="+ MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
+                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part=" + YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults=" + MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
                         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
                         queue.add(stringRequest);
                     }
@@ -139,7 +130,7 @@ public class AddRecipeFragment extends Fragment {
         fragmentAddRecipeBinding.loadImageButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
-                    public void onClick(View v){
+                    public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                         intent.setType("image/*");
@@ -178,7 +169,7 @@ public class AddRecipeFragment extends Fragment {
 
                         fragmentAddRecipeBinding.addIngredientsLayout.addView(layout);
                     }
-        });
+                });
 
         fragmentAddRecipeBinding.addRecipeSubmitButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -187,10 +178,10 @@ public class AddRecipeFragment extends Fragment {
                         ArrayList<String> ingredients = new ArrayList<>();
                         ArrayList<String> measures = new ArrayList<>();
 
-                        for(EditText editText : ingredientsArray){
+                        for (EditText editText : ingredientsArray) {
                             ingredients.add(editText.getText().toString());
                         }
-                        for(EditText editText : measuresArray){
+                        for (EditText editText : measuresArray) {
                             measures.add(editText.getText().toString());
                         }
 
@@ -207,16 +198,16 @@ public class AddRecipeFragment extends Fragment {
                                 ""
                         );
                     }
-        });
+                });
 
         return view;
     }
 
-    private void addRecipe(Context context, String meal, String area, String category, ArrayList<String> ingredients, ArrayList<String> measures, String instructions, String youtube, String mealThumb,  String rating){
+    private void addRecipe(Context context, String meal, String area, String category, ArrayList<String> ingredients, ArrayList<String> measures, String instructions, String youtube, String mealThumb, String rating) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection(COLLECTION_PATH).document();
         String storagePath = UPLOAD_FIRESTORE_STORAGE_DIRECTORY + documentReference.getId();
-        try{
+        try {
             Uri uri = Uri.parse(mealThumb);
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
             StorageReference storageReference = firebaseStorage.getReference();
@@ -233,7 +224,7 @@ public class AddRecipeFragment extends Fragment {
                     Toast.makeText(context, "Upload failed!", Toast.LENGTH_SHORT);
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(context, "Image not found!", Toast.LENGTH_SHORT);
         }
 
@@ -256,15 +247,14 @@ public class AddRecipeFragment extends Fragment {
                         fragment).commit();
     }
 
-    public void fetchApiKey(String collectionName, String documentName){
+    public void fetchApiKey(String collectionName, String documentName) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection(collectionName).document(documentName);
         documentReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 DocumentSnapshot snapshot = task.getResult();
                 youtubeDataApiKey = snapshot.getString("key");
-            }
-            else{
+            } else {
                 Toast.makeText(this.getContext(), "Youtube connection failed!", Toast.LENGTH_SHORT);
             }
         });

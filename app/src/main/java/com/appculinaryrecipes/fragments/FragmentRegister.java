@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.RegisterFragmentBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +34,7 @@ public class FragmentRegister extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        registerFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.register_fragment,container,false);
+        registerFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment,container,false);
         registerFragmentBinding.setCallback(this);
         View view = registerFragmentBinding.getRoot();
         firebaseAuth = FirebaseAuth.getInstance();

@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.activities;
 
 import android.os.Bundle;
 
@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.appculinaryrecipes.CallbackFragment;
+import com.appculinaryrecipes.R;
+import com.appculinaryrecipes.fragments.FragmentLogin;
+import com.appculinaryrecipes.fragments.FragmentRegister;
 
 public class AuthActivity extends AppCompatActivity implements CallbackFragment {
     Fragment fragment;

@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

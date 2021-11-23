@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,7 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
+import com.appculinaryrecipes.fragments.AddRecipeFragment;
+import com.appculinaryrecipes.fragments.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
