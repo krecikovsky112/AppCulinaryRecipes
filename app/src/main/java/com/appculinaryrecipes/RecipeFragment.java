@@ -1,5 +1,6 @@
 package com.appculinaryrecipes;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,17 +10,26 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -188,10 +198,43 @@ public class RecipeFragment extends Fragment {
         }
     }
 
-    //TODO: Do zaimplementowanie przejście do generatora listy zakupów
-    public void onClickGenerateList(){
-
+    private String getUser(){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        return firebaseUser.getEmail();
     }
+
+    public void onClickGenerateList(){
+        Bundle args = this.getArguments();
+        System.out.println(args.get(ARG_PARAM3));
+        String userEmail = getUser();
+        System.out.println(userEmail);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("users")
+                .whereEqualTo("email", userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String res = String.valueOf(document.getData().get("listsLeft"));
+                                int listsLeft = Integer.parseInt(res);
+                                if(listsLeft > 0){
+                                    ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(id);
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
+                                }
+                                else{
+                                    Toast.makeText(getActivity().getApplicationContext(), "Limit reached!", Toast.LENGTH_LONG);
+                                }
+                            }
+                        } else {
+                            System.out.println("#error");
+                            Log.d("Hej", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        }
 }
 
 

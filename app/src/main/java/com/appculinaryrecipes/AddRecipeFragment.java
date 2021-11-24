@@ -2,6 +2,7 @@ package com.appculinaryrecipes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -102,12 +103,10 @@ public class AddRecipeFragment extends Fragment {
                                 Response youtubeSearchResponse = gson.fromJson(response, Response.class);
                                 ImageView imageView = new ImageView(context);
                                 TextView textView = new TextView(context);
-                                CircularProgressDrawable drawable = new CircularProgressDrawable(context);
-                                drawable.setStrokeWidth(5f);
-                                drawable.setCenterRadius(30f);
-                                drawable.start();
-                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).placeholder(drawable).into(imageView);
+                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).into(imageView);
                                 textView.setText(youtubeSearchResponse.getItem(i).getSnippet().getTitle());
+                                textView.setTextSize(20);
+                                textView.setTextColor(Color.parseColor("#ae0216"));
                                 final String videoURL = YOUTUBE_VIDEO_URL_BASE + youtubeSearchResponse.getItem(i).getId().getVideoId();
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -115,6 +114,7 @@ public class AddRecipeFragment extends Fragment {
                                         fragmentAddRecipeBinding.editTextYoutube.setText(videoURL);
                                     }
                                 });
+                                imageView.setPadding(10, 10, 10, 0);
                                 fragmentAddRecipeBinding.youtubeVideosLayout.addView(imageView);
                                 fragmentAddRecipeBinding.youtubeVideosLayout.addView(textView);
                             }
