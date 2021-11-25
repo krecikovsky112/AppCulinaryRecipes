@@ -1,6 +1,5 @@
 package com.appculinaryrecipes;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
+import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -201,39 +200,32 @@ public class RecipeFragment extends Fragment {
     private String getUser(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        return firebaseUser.getEmail();
+        return firebaseUser.getUid();
     }
 
     public void onClickGenerateList(){
-        Bundle args = this.getArguments();
-        System.out.println(args.get(ARG_PARAM3));
-        String userEmail = getUser();
-        System.out.println(userEmail);
+        String userUid = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection("users")
-                .whereEqualTo("email", userEmail)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String res = String.valueOf(document.getData().get("listsLeft"));
-                                int listsLeft = Integer.parseInt(res);
-                                if(listsLeft > 0){
-                                    ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(id);
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
-                                }
-                                else{
-                                    Toast.makeText(getActivity().getApplicationContext(), "Limit reached!", Toast.LENGTH_LONG);
-                                }
-                            }
-                        } else {
-                            System.out.println("#error");
-                            Log.d("Hej", "Error getting documents: ", task.getException());
-                        }
+        DocumentReference documentReference = database.collection("users").document(userUid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String res = String.valueOf(document.getData().get("listsLeft"));
+                    int listsLeft = Integer.parseInt(res);
+                    if (listsLeft > 0) {
+                        ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(id, userUid);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
+                    } else {
+                        //TODO przejście do listy list
+                        Toast.makeText(getActivity().getApplicationContext(), "Limit reached!", Toast.LENGTH_LONG);
                     }
-                });
+                }
+                else
+                    Toast.makeText(getActivity().getApplicationContext(), "User error!", Toast.LENGTH_LONG);
+            }
+        });
         }
 }
 

@@ -150,8 +150,7 @@ public class AddRecipeFragment extends Fragment {
         ArrayList<EditText> ingredientsArray = new ArrayList<>();
         ArrayList<EditText> measuresArray = new ArrayList<>();
 
-        Button button = view.findViewById(R.id.addIngredientButton);
-        button.setOnClickListener(
+        fragmentAddRecipeBinding.addIngredientButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
