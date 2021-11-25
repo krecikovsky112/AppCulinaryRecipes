@@ -73,6 +73,7 @@ public class FragmentRegister extends Fragment {
                     user.put("fullname",registerFragmentBinding.inputFullnameText.getText().toString());
                     user.put("email",registerFragmentBinding.inputEmailText.getText().toString());
                     user.put("password",registerFragmentBinding.editTextPassword.getText().toString());
+                    user.put("listsLeft", 10);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

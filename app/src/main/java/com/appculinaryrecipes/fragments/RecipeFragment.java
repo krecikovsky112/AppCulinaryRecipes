@@ -16,12 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
+import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -190,10 +198,36 @@ public class RecipeFragment extends Fragment {
         }
     }
 
-    //TODO: Do zaimplementowanie przejście do generatora listy zakupów
-    public void onClickGenerateList(){
-
+    private String getUser(){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        return firebaseUser.getUid();
     }
+
+    public void onClickGenerateList(){
+        String userUid = getUser();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection("users").document(userUid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String res = String.valueOf(document.getData().get("listsLeft"));
+                    int listsLeft = Integer.parseInt(res);
+                    if (listsLeft > 0) {
+                        ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(id, userUid);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
+                    } else {
+                        //TODO przejście do listy list
+                        Toast.makeText(getActivity().getApplicationContext(), "Limit reached!", Toast.LENGTH_LONG);
+                    }
+                }
+                else
+                    Toast.makeText(getActivity().getApplicationContext(), "User error!", Toast.LENGTH_LONG);
+            }
+        });
+        }
 }
 
 

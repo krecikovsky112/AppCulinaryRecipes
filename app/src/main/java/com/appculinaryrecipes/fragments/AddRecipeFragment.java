@@ -2,12 +2,12 @@ package com.appculinaryrecipes.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -94,12 +93,10 @@ public class AddRecipeFragment extends Fragment {
                                 Response youtubeSearchResponse = gson.fromJson(response, Response.class);
                                 ImageView imageView = new ImageView(context);
                                 TextView textView = new TextView(context);
-                                CircularProgressDrawable drawable = new CircularProgressDrawable(context);
-                                drawable.setStrokeWidth(5f);
-                                drawable.setCenterRadius(30f);
-                                drawable.start();
-                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).placeholder(drawable).into(imageView);
+                                Glide.with(view).load(youtubeSearchResponse.getItem(i).getSnippet().getThumbnails().getMedium().getUrl()).into(imageView);
                                 textView.setText(youtubeSearchResponse.getItem(i).getSnippet().getTitle());
+                                textView.setTextSize(20);
+                                textView.setTextColor(Color.parseColor("#ae0216"));
                                 final String videoURL = YOUTUBE_VIDEO_URL_BASE + youtubeSearchResponse.getItem(i).getId().getVideoId();
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -107,6 +104,7 @@ public class AddRecipeFragment extends Fragment {
                                         fragmentAddRecipeBinding.editTextYoutube.setText(videoURL);
                                     }
                                 });
+                                imageView.setPadding(10, 10, 10, 0);
                                 fragmentAddRecipeBinding.youtubeVideosLayout.addView(imageView);
                                 fragmentAddRecipeBinding.youtubeVideosLayout.addView(textView);
                             }
@@ -141,8 +139,7 @@ public class AddRecipeFragment extends Fragment {
         ArrayList<EditText> ingredientsArray = new ArrayList<>();
         ArrayList<EditText> measuresArray = new ArrayList<>();
 
-        Button button = view.findViewById(R.id.addIngredientButton);
-        button.setOnClickListener(
+        fragmentAddRecipeBinding.addIngredientButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
