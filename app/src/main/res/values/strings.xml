@@ -12,4 +12,6 @@
     <string name="thumbnail_picture">Thumbnail picture</string>
     <string name="category">category</string>
     <string name="recipe_name">recipe name</string>
+    <string name="textViewArea">Area</string>
+    <string name="textviewCategory">Category</string>
 </resources>

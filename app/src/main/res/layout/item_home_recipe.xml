@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp">
@@ -11,18 +10,71 @@
             android:orientation="horizontal"
             android:background="#ffefef">
             <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/googleg_standard_color_18"
                 android:id="@+id/recipeImage"
                 android:padding="5dp"/>
-            <TextView
+
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Text"
-                android:textSize="20sp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/recipeTitle"/>
+                android:weightSum="1">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/recipeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:ems="20"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3">
+
+                    <TextView
+                        android:id="@+id/areaCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeMaxTextSize="25sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1">
+
+                    <RatingBar
+                        android:id="@+id/rating"
+                        style="@android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX=".5"
+                        android:scaleY=".5"
+
+                        android:paddingBottom="0dp"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="0dp"
+                        android:isIndicator="true"
+                        android:max="5" />
+
+                </TableRow>
+
+            </TableLayout>
 
         </LinearLayout>
 

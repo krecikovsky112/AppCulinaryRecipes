@@ -1,4 +1,4 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
 import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -122,7 +123,7 @@ public class RecipeFragment extends Fragment {
                 assert urlVideo != null;
                 setYoutubePlayer(urlVideo);
             } else {
-                System.out.println("get failed with " + task.getException());
+                Log.w("ERROR", "get failed with " + task.getException());
             }
         });
     }

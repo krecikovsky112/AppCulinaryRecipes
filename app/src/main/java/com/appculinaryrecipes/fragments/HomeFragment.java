@@ -1,18 +1,23 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.appculinaryrecipes.R;
+import com.appculinaryrecipes.Recipe;
+import com.appculinaryrecipes.RecyclerViewAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -34,6 +39,7 @@ public class HomeFragment extends Fragment {
     private String key = null;
     private DocumentSnapshot lastResult = null;
     private FragmentHomeBinding fragmentHomeBinding;
+    private Button button;
 
     public HomeFragment() {
     }
@@ -51,10 +57,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         lastResult = null;
-        fragmentHomeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
+        fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = fragmentHomeBinding.getRoot();
         recyclerView = fragmentHomeBinding.homeRecyclerView;
         swipeRefreshLayout = fragmentHomeBinding.homeSwipeRefreshLayout;
+        button = fragmentHomeBinding.goToSearchFragmentButton;
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -78,12 +85,19 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        button.setOnClickListener(v -> {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            SearchFragment myFragment= new SearchFragment();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("HOME_FRAGMENT").commit();
+        });
+
         return view;
     }
 
     private void leadData() {
         swipeRefreshLayout.setRefreshing(true);
-        ArrayList<Recipe> a = new ArrayList<>();
+        ArrayList<Recipe> recipeArrayList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query;
 
@@ -98,7 +112,7 @@ public class HomeFragment extends Fragment {
                     .limit(PAGE_ITEM_SIZE);
         }
 
-
+        
         query
                 .get()
                 .addOnCompleteListener(task -> {
@@ -110,15 +124,18 @@ public class HomeFragment extends Fragment {
                             String id = document.getId();
                             if ((meal != null) && (mealThumb != null)) {
                                 Recipe recipe = new Recipe();
-                                recipe.setImageURL(mealThumb);
-                                recipe.setTitle(meal);
+                                recipe.setMealThumb(mealThumb);
+                                recipe.setMeal(meal);
                                 recipe.setId(id);
-                                a.add(recipe);
+                                recipe.setArea((String)data.get("area"));
+                                recipe.setCategory((String)data.get("category"));
+                                recipe.setRating((String)data.get("rating"));
+                                recipeArrayList.add(recipe);
                             }
                         }
 
                         if (task.getResult().size() > 0) {
-                            recyclerViewAdapter.setItems(a);
+                            recyclerViewAdapter.setItems(recipeArrayList);
                             recyclerViewAdapter.notifyDataSetChanged();
                             lastResult = task.getResult().getDocuments().get(task.getResult().size() - 1);
                         }
@@ -126,7 +143,7 @@ public class HomeFragment extends Fragment {
                         isLoading = false;
                         swipeRefreshLayout.setRefreshing(false);
                     } else {
-                        Log.w("XD", "Error getting documents.", task.getException());
+                        Log.w("EXCEPTION", "Error getting documents.", task.getException());
                     }
                 });
     }

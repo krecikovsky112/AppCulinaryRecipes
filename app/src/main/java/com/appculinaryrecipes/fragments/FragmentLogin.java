@@ -1,11 +1,9 @@
-package com.appculinaryrecipes;
+package com.appculinaryrecipes.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.telecom.Call;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.appculinaryrecipes.CallbackFragment;
+import com.appculinaryrecipes.activities.MainActivity;
+import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.LoginFragmentBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -65,8 +66,7 @@ public class FragmentLogin extends Fragment {
                             GoogleSignInAccount account = accountTask.getResult(ApiException.class);
                             firebaseAuthWithGoogleAccount(account);
                         } catch (Exception e) {
-                            System.out.println(e.getMessage());
-
+                            Log.w("EXCEPTION", "Error getting documents.", e);
                         }
                     }
                 });

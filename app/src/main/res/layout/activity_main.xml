@@ -5,7 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
+        tools:context=".activities.MainActivity"
         android:background="@drawable/background_all_acivity">
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_alignParentTop="true"
-            android:background="@drawable/rounded"
+            android:background="@drawable/background_instruction"
             android:elevation="16dp"
             android:padding="8dp"
             app:cnb_menuResource="@menu/menu_bottom"
