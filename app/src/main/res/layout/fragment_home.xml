@@ -17,7 +17,7 @@
                 android:id="@+id/goToSearchFragmentButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#AE0216"
+                android:background="@color/own_red"
                 android:drawableStart="@android:drawable/ic_menu_search"
                 android:padding="20dp"
                 android:text="Search"
