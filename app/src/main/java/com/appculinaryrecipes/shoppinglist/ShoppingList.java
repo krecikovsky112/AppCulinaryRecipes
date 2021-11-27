@@ -39,8 +39,20 @@ public class ShoppingList {
     protected String userUid;
     protected String mealName;
 
+    public String getMealName() {
+        return mealName;
+    }
+
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
+    }
+
     FragmentShoppingListDetailsBinding fragmentShoppingListDetailsBinding;
     Context context;
+
+    public ShoppingList(){
+
+    }
 
     protected ShoppingList(FragmentShoppingListDetailsBinding fragmentShoppingListDetailsBinding, Context context){
         this.fragmentShoppingListDetailsBinding = fragmentShoppingListDetailsBinding;
