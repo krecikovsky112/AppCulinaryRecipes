@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -114,16 +116,29 @@ public class AddRecipeFragment extends Fragment {
                     }
                 };
 
-        fragmentAddRecipeBinding.searchButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
+//        fragmentAddRecipeBinding.searchButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
+//                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part=" + YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults=" + MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
+//                        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
+//                        queue.add(stringRequest);
+//                    }
+//                });
+        fragmentAddRecipeBinding.editTextSearchOnYoutube.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH){
+                    search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
                         String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part=" + YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults=" + MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
                         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
                         queue.add(stringRequest);
-                    }
-                });
+                    return true;
+                }
+                return false;
+            }
+        });
 
         fragmentAddRecipeBinding.loadImageButton.setOnClickListener(
                 new View.OnClickListener() {
