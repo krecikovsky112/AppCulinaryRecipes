@@ -3,8 +3,10 @@ package com.appculinaryrecipes.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -116,16 +119,6 @@ public class AddRecipeFragment extends Fragment {
                     }
                 };
 
-//        fragmentAddRecipeBinding.searchButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        search = fragmentAddRecipeBinding.editTextSearchOnYoutube.getText().toString();
-//                        String requestURL = YOUTUBE_DATA_API_BASE_URL + "?part=" + YOUTUBE_DATA_API_RESOURCE_PROPERTY + "&maxResults=" + MAX_RESULTS + "&q=" + search + "&type=" + YOUTUBE_RESOURCE_TYPE + "&key=" + youtubeDataApiKey;
-//                        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, listener, null);
-//                        queue.add(stringRequest);
-//                    }
-//                });
         fragmentAddRecipeBinding.editTextSearchOnYoutube.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -155,32 +148,35 @@ public class AddRecipeFragment extends Fragment {
         ArrayList<EditText> measuresArray = new ArrayList<>();
 
         fragmentAddRecipeBinding.addIngredientButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LinearLayout layout = new LinearLayout(context);
-                        layout.setOrientation(LinearLayout.VERTICAL);
+                v -> {
+                    Typeface face = ResourcesCompat.getFont(getActivity(), R.font.dongle_regular);
+                    LinearLayout layout = new LinearLayout(context);
+                    layout.setPadding(0,20,0,0);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    EditText ingredientEditText = new EditText(context);
+                    ingredientEditText.setHint("ingredient");
+                    setAttributesEditText(face,ingredientEditText);
+                    ingredientEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    ingredientsArray.add(ingredientEditText);
 
-                        EditText ingredientEditText = new EditText(context);
-                        ingredientEditText.setHint("ingredient");
-                        ingredientsArray.add(ingredientEditText);
-                        layout.addView(ingredientEditText);
 
-                        EditText measureEditText = new EditText(context);
-                        measureEditText.setHint("measure");
-                        measuresArray.add(measureEditText);
-                        layout.addView(measureEditText);
+                    EditText measureEditText = new EditText(context);
+                    measureEditText.setHint("measure");
+                    setAttributesEditText(face, measureEditText);
+                    measureEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    measuresArray.add(measureEditText);
+                    ingredientEditText.setLayoutParams(new
+                            LinearLayout.LayoutParams(800,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                        ingredientEditText.setLayoutParams(new
-                                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT));
+                    measureEditText.setLayoutParams(new
+                            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                        measureEditText.setLayoutParams(new
-                                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT));
+                    layout.addView(ingredientEditText);
+                    layout.addView(measureEditText);
 
-                        fragmentAddRecipeBinding.addIngredientsLayout.addView(layout);
-                    }
+                    fragmentAddRecipeBinding.addIngredientsLayout.addView(layout);
                 });
 
         fragmentAddRecipeBinding.addRecipeSubmitButton.setOnClickListener(
@@ -213,6 +209,19 @@ public class AddRecipeFragment extends Fragment {
                 });
 
         return view;
+    }
+
+    private void setAttributesEditText(Typeface face, EditText editText) {
+        editText.setBackgroundResource(R.drawable.background_field);
+        editText.setClickable(true);
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.setHintTextColor(getResources().getColor(R.color.own_red));
+        editText.setTextColor(getResources().getColor(R.color.own_red));
+        editText.setTypeface(face);
+
+        editText.setPadding(80,0,0,0);
+        editText.setTextSize(25);
     }
 
     private void addRecipe(Context context, String meal, String area, String category, ArrayList<String> ingredients, ArrayList<String> measures, String instructions, String youtube, String mealThumb, String rating) {
