@@ -72,7 +72,8 @@ public class ShoppingListsFragment extends Fragment {
                     for (QueryDocumentSnapshot document : value) {
                         ShoppingList shoppingList = new ShoppingList();
                         shoppingList.setMealName(document.getString("meal"));
-
+                        String id = document.getId();
+                        shoppingList.setShoppingListUid(id);
                         shoppingLists.add(shoppingList);
                     }
                     recyclerViewAdapterShoppingLists.setItems(shoppingLists);

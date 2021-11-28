@@ -61,7 +61,10 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
         counter++;
 
         holder.itemView.setOnClickListener(view -> {
-            //TODO: do zaimplementowania przejście do widoku z fragmentem wygenerowanej listy
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(null, getUser());
+            fragment.setShoppingListId(shoppingList.getShoppingListUid());
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
         });
     }
 
