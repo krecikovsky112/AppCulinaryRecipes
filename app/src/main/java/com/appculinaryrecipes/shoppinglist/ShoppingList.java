@@ -110,33 +110,6 @@ public class ShoppingList {
                 }
             });
 
-//        else{
-//            getShoppingList();
-//            displayList();
-//        }
-
-    }
-
-    //TODO: nie wchodzi do onComplete
-    private void getShoppingList() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = db
-                .collection(DB_RECIPE_DOCUMENT_NAME).document(shoppingListUid);
-
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    ingredients = (ArrayList<String>) documentSnapshot.get("ingredients");
-                    measures = (ArrayList<String>) documentSnapshot.get("measure");
-                    checked = (ArrayList<Boolean>) documentSnapshot.get("checked");
-                    userUid = documentSnapshot.getString("user");
-                    mealName = String.valueOf(documentSnapshot.getData().get("meal"));
-                }
-            }
-        });
-
     }
 
     private void updateDatabase(int update){
