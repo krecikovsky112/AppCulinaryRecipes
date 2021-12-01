@@ -17,6 +17,7 @@ import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.Recipe;
 import com.appculinaryrecipes.RecyclerViewAdapter;
 import com.appculinaryrecipes.databinding.FragmentSearchBinding;
+import com.appculinaryrecipes.functions.Functions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -116,7 +117,7 @@ public class SearchFragment extends Fragment {
         Button getSelectedRecipe = fragmentSearchBinding.buttonSearch;
 
         getSelectedRecipe.setOnClickListener(v -> {
-            getRecipeByAreaAndCategory(selectedArea, selectedCategory)
+            Functions.getRecipeByAreaAndCategory(selectedArea, selectedCategory)
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
                         public void onComplete(@NonNull Task<String> task) {
@@ -160,17 +161,5 @@ public class SearchFragment extends Fragment {
         });
 
         return view;
-    }
-
-
-    private Task<String> getRecipeByAreaAndCategory(String area, String category) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("area", area);
-        data.put("category", category);
-        data.put("push", true);
-        return firebaseFunctions
-                .getHttpsCallable("getRecipeByAreaAndCategory")
-                .call(data)
-                .continueWith(task -> (String) task.getResult().getData());
     }
 }
