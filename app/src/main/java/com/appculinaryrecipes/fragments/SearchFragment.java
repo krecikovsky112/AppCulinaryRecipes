@@ -113,6 +113,50 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        selectedArea = "American";
+        selectedCategory = "Beef";
+        getRecipeByAreaAndCategory(selectedArea, selectedCategory)
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Exception e = task.getException();
+                            e.printStackTrace();
+                            if (e instanceof FirebaseFunctionsException) {
+                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                FirebaseFunctionsException.Code code = ffe.getCode();
+                                Object details = ffe.getDetails();
+                            }
+                        } else {
+                            Gson gson = new Gson();
+                            Recipe[] recipesArray = gson.fromJson(task.getResult(), Recipe[].class);
+                            swipeRefreshLayout.setRefreshing(true);
+
+                            if (recyclerViewAdapter.getRecipeArrayList().size() > 0) {
+                                recyclerViewAdapter.getRecipeArrayList().clear();
+                            }
+
+                            ArrayList<Recipe> recipeArrayList = new ArrayList<>();
+                            for (Recipe recipeItem : recipesArray) {
+
+                                Recipe recipe = new Recipe();
+                                recipe.setMealThumb(recipeItem.getMealThumb());
+                                recipe.setMeal(recipeItem.getMeal());
+                                recipe.setId(recipeItem.getId());
+                                recipe.setCategory(recipeItem.getCategory());
+                                recipe.setRating(recipeItem.getRating());
+                                recipe.setArea(recipeItem.getArea());
+                                recipeArrayList.add(recipe);
+                            }
+
+                            recyclerViewAdapter.setItems(recipeArrayList);
+                            recyclerViewAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+
+                        }
+                    }
+                });
+
         Button getSelectedRecipe = fragmentSearchBinding.buttonSearch;
 
         getSelectedRecipe.setOnClickListener(v -> {

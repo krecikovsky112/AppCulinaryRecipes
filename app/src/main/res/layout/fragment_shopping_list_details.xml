@@ -8,13 +8,38 @@
     android:layout_height="match_parent"
     tools:context=".shoppinglist.ShoppingListDetailsFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/titleRecipe"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
 
-    </LinearLayout>
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="80dp"
+            android:fontFamily="@font/dongle_regular"
+            android:textAlignment="center"
+            android:textColor="#ae0216"
+            android:textSize="60sp" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+           >
+                <LinearLayout
+                    android:background="#ffefef"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </androidx.cardview.widget.CardView>
+
+
+
 
 </FrameLayout>
 </layout>
