@@ -31,6 +31,7 @@ public class ShoppingListDetailsFragment extends Fragment {
 
     private String recipeId;
     private String userId;
+    private String shoppingListId;
 
     private ShoppingList shoppingList;
 
@@ -60,8 +61,13 @@ public class ShoppingListDetailsFragment extends Fragment {
         fragmentShoppingListDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_shopping_list_details, container, false);
         View view = fragmentShoppingListDetailsBinding.getRoot();
         shoppingList = new ShoppingList(fragmentShoppingListDetailsBinding, getContext());
+        shoppingList.setShoppingListUid(shoppingListId);
         shoppingList.newInstance(recipeId, userId);
         return view;
+    }
+
+    public void setShoppingListId(String id){
+        this.shoppingListId = id;
     }
 
 }

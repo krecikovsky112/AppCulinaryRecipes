@@ -20,6 +20,7 @@ import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
 import com.appculinaryrecipes.fragments.AddRecipeFragment;
 import com.appculinaryrecipes.fragments.HomeFragment;
+import com.appculinaryrecipes.fragments.ShoppingListsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new AddRecipeFragment();
                         break;
                     case R.id.home:
+                        fragment = new HomeFragment();
+                        break;
+                    case R.id.shopping_lists:
+                        fragment = new ShoppingListsFragment();
+                        break;
                     default:
                         fragment = new HomeFragment();
                         break;

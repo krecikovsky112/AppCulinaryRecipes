@@ -16,6 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentShoppingListDetailsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,17 +31,36 @@ public class ShoppingList {
     private final static int LIST_DELETE = 1;
     private final static int LIST_CREATE = -1;
     private final static int INGREDIENTS_UPDATE = 0;
+    private static final String DB_RECIPE_DOCUMENT_NAME = "shopping_lists";
 
     private String shoppingListUid;
-
     protected ArrayList<String> ingredients;
     protected ArrayList<String> measures;
     protected ArrayList<Boolean> checked;
     protected String userUid;
     protected String mealName;
-
     FragmentShoppingListDetailsBinding fragmentShoppingListDetailsBinding;
     Context context;
+
+    public String getShoppingListUid() {
+        return shoppingListUid;
+    }
+
+    public void setShoppingListUid(String shoppingListUid) {
+        this.shoppingListUid = shoppingListUid;
+    }
+
+    public String getMealName() {
+        return mealName;
+    }
+
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
+    }
+
+    public ShoppingList(){
+
+    }
 
     protected ShoppingList(FragmentShoppingListDetailsBinding fragmentShoppingListDetailsBinding, Context context){
         this.fragmentShoppingListDetailsBinding = fragmentShoppingListDetailsBinding;
@@ -48,26 +68,48 @@ public class ShoppingList {
     }
 
     protected void newInstance(String recipeId, String userId) {
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = database.collection("recipes").document(recipeId);
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    ingredients = (ArrayList<String>) document.get("indigrients");
-                    measures = (ArrayList<String>) document.get("measure");
-                    checked = new ArrayList<>();
-                    for(int i = 0; i < ingredients.size(); i++){
-                        checked.add(false);
-                    }
-                    userUid = userId;
-                    mealName = String.valueOf(document.getData().get("meal"));
-                    updateDatabase(LIST_CREATE);
-                    displayList();
-                }
+            FirebaseFirestore database = FirebaseFirestore.getInstance();
+            String collectionName, ingredientsName,id;
+            if(recipeId == null){
+                collectionName = "shopping_lists";
+                ingredientsName = "ingredients";
+                id = shoppingListUid;
             }
-        });
+            else{
+                collectionName = "recipes";
+                ingredientsName = "indigrients";
+                id = recipeId;
+            }
+
+            DocumentReference documentReference = database.collection(collectionName).document(id);
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        ingredients = (ArrayList<String>) document.get(ingredientsName);
+                        measures = (ArrayList<String>) document.get("measure");
+                        if(recipeId == null){
+                            checked = (ArrayList<Boolean>) document.get("checked");
+                        }
+                        else{
+                            checked = new ArrayList<>();
+                            for(int i = 0; i < ingredients.size(); i++){
+
+                            }
+                         checked.add(false);
+                        }
+                        userUid = userId;
+                        mealName = String.valueOf(document.getData().get("meal"));
+                        if(recipeId != null){
+                            updateDatabase(LIST_CREATE);
+                        }
+
+                        displayList();
+                    }
+                }
+            });
+
     }
 
     private void updateDatabase(int update){

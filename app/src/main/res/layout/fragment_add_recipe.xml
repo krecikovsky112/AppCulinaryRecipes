@@ -20,19 +20,32 @@
             android:layout_marginRight="20dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="20dp">
-
-                <com.google.android.material.textfield.TextInputLayout
+            android:paddingTop="20dp">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create recipe"
+                android:fontFamily="@font/dongle_regular"
+                android:textSize="60sp"
+                android:textColor="@color/own_red"
+                android:gravity="center"/>
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:hint="recipe name"
+                    android:hint="name"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
                     app:boxCornerRadiusTopStart="25dp"
-                    app:boxStrokeWidth="0dp">
+                    app:startIconDrawable="@drawable/recipe_name"
+                    app:startIconTint="@color/own_red"
+                >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextMeal"
@@ -47,13 +60,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:hint="recipe name"
+                    android:hint="category"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
                     app:boxCornerRadiusTopStart="25dp"
-                    app:boxStrokeWidth="0dp">
+                    app:boxStrokeWidth="0dp"
+                    app:startIconDrawable="@drawable/category"
+                    app:startIconTint="@color/own_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextCategory"
@@ -69,12 +86,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="meal thumbnail"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
                     app:boxCornerRadiusTopStart="25dp"
-                    app:boxStrokeWidth="0dp">
+                    app:boxStrokeWidth="0dp"
+                    app:startIconDrawable="@drawable/image"
+                    app:startIconTint="@color/own_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextMealThumb"
@@ -90,12 +111,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="youtube video"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
                     app:boxCornerRadiusTopStart="25dp"
-                    app:boxStrokeWidth="0dp">
+                    app:boxStrokeWidth="0dp"
+                    app:startIconDrawable="@drawable/film"
+                    app:startIconTint="@color/own_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextYoutube"
@@ -111,6 +136,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="instructions"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
@@ -122,7 +149,7 @@
                         android:id="@+id/editTextInstructions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="50"
+                        android:ems="10"
                         android:inputType="textMultiLine"
                         android:lines="10" />
 
@@ -134,12 +161,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="area"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:textColorHint="@color/own_red"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
                     app:boxCornerRadiusTopStart="25dp"
-                    app:boxStrokeWidth="0dp">
+                    app:boxStrokeWidth="0dp"
+                    app:startIconDrawable="@drawable/area"
+                    app:startIconTint="@color/own_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextArea"
@@ -155,78 +186,102 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <Button
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/loadImageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/load_image"
-                    app:backgroundTint="#ae0216" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
 
-                <Button
-                    android:id="@+id/addIngredientButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_ingredient"
-                    app:backgroundTint="#ae0216" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_login"
+                    android:src="@drawable/add_image"
+                    android:textColor="@color/white" />
 
-                <LinearLayout
-                    android:id="@+id/addIngredientsLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:backgroundTint="#ae0216"></LinearLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/addRecipeSubmitButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_toStartOf="@+id/addIngredientButton"
+                    android:layout_toEndOf="@+id/loadImageButton"
+                    android:background="@drawable/button_login"
+                    android:src="@drawable/save"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/addIngredientButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_login"
+                    android:src="@drawable/ingredients" />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/addIngredientsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:backgroundTint="#ae0216" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextYoutubeInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/submit"
-                    android:textSize="20sp"
-                    app:backgroundTint="#ae0216" />
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="0dp"
+                    android:hint="search"
+                    app:hintTextColor="@color/own_red"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="25dp"
+                    app:boxCornerRadiusBottomStart="25dp"
+                    app:boxCornerRadiusTopEnd="25dp"
+                    app:boxCornerRadiusTopStart="25dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:startIconDrawable="@drawable/yt_search"
+                    app:startIconTint="@color/own_red">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextSearchOnYoutube"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="50"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/editTextYoutubeInputLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="30dp"
-                        android:hint="search"
-                        app:boxBackgroundColor="@color/white"
-                        app:boxCornerRadiusBottomEnd="25dp"
-                        app:boxCornerRadiusBottomStart="25dp"
-                        app:boxCornerRadiusTopEnd="25dp"
-                        app:boxCornerRadiusTopStart="25dp"
-                        app:boxStrokeWidth="0dp">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextSearchOnYoutube"
-                            android:layout_width="200dp"
-                            android:layout_height="match_parent"
-                            android:ems="50"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/searchButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_toRightOf="@+id/editTextYoutubeInputLayout"
-                        android:background="@drawable/yt_search"
-                        android:gravity="center"
-                        android:textSize="10sp"
-                        app:backgroundTint="#ae0216" />
-
-                </RelativeLayout>
+            </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/youtubeVideosLayout"
@@ -235,7 +290,8 @@
                     android:orientation="vertical"
                     android:paddingTop="20dp" />
 
-            </LinearLayout>
+
+        </LinearLayout>
         </ScrollView>
 
     </FrameLayout>

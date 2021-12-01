@@ -41,7 +41,10 @@
                 android:layout_marginTop="270dp"
                 android:layout_marginEnd="20dp"
                 android:hint="email"
+                app:startIconTint="@color/own_red"
+                android:textColorHint="@color/own_red"
                 app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:boxCornerRadiusBottomStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp"
@@ -70,6 +73,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:hint="password"
+                app:startIconTint="@color/own_red"
+
                 app:boxCornerRadiusBottomStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp"
@@ -77,7 +82,10 @@
                 app:boxBackgroundColor="@color/white"
                 app:endIconMode="password_toggle"
                 app:boxStrokeWidth="0dp"
-                app:startIconDrawable="@drawable/padlock">
+                app:boxStrokeWidthFocused="0dp"
+                android:textColorHint="@color/own_red"
+                app:startIconDrawable="@drawable/padlock"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPassword"

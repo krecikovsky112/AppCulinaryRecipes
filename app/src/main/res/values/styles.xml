@@ -7,10 +7,8 @@
         <item name="color">@color/white</item>
     </style>
 
-    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:minHeight">5dp</item>
-        <item name="android:maxHeight">7dp</item>
-        <item name="colorControlNormal">#E6B728</item>
-        <item name="colorControlActivated">#E6B728</item>
+    <style name="MyRatingBar" parent="android:Widget.DeviceDefault.RatingBar">
+        <item name="color">#D2D1CD</item>
+        <item name="colorControlActivated">@color/gold</item>
     </style>
 </resources>
