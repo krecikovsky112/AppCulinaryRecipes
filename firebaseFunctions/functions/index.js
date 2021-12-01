@@ -18,3 +18,23 @@ exports.getRecipeByAreaAndCategory = functions.https.onCall(async (data, context
   
   return JSON.stringify(recipes);
 });
+
+exports.getRecipeByindigrients = functions.https.onCall(async (data, context) => {
+
+  let checker = (arr, target) => target.every(v => arr.includes(v));
+  const filteredData = await admin.firestore().collection('recipes').get();
+
+  let recipes = [];
+  filteredData.forEach((doc) => {
+      let id = doc.id;
+      let dataRecipe = doc.data();
+      if (checker(dataRecipe.indigrients, data.ingredients)) {
+          recipes.push({
+              id,
+              ...dataRecipe
+          });
+      }
+  });
+
+  return JSON.stringify(recipes);
+});
