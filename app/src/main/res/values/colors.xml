@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="own_red">#ae0216</color>
     <color name="gold">#E1E516</color>
+    <color name="transparent">#80000000</color>
+    <color name="background_color">#ffefef</color>
 </resources>

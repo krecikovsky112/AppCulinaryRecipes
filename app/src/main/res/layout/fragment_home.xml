@@ -12,17 +12,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <Button
+        android:id="@+id/goToSearchFragmentButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/button_login"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:textAlignment="center"
+        android:text="FILTERS"
+        android:fontFamily="@font/dongle_regular"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+</RelativeLayout>
 
-            <Button
-                android:id="@+id/goToSearchFragmentButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/own_red"
-                android:drawableStart="@android:drawable/ic_menu_search"
-                android:padding="20dp"
-                android:text="Search"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/homeSwipeRefreshLayout"

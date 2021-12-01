@@ -1,6 +1,8 @@
 package com.appculinaryrecipes.shoppinglist;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.CheckBox;
@@ -168,23 +170,25 @@ public class ShoppingList {
     }
 
     protected void displayList(){
+        fragmentShoppingListDetailsBinding.titleRecipe.setText(mealName);
         int length = ingredients.size();
         for(int i = 0; i < length; i++){
             ImageView imageView = new ImageView(context);
             Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.icon_delete);
             drawable.setBounds(5, 5, 5, 5);
             imageView.setImageDrawable(drawable);
-            imageView.setPadding(5, 5, 5, 5);
+            imageView.setPadding(5, 5, 10, 5);
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setPadding(10, 10, 10, 10);
 
             CheckBox c = new CheckBox(context);
+            c.setButtonTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.own_red)));
             c.setTag(ingredients.get(i));
             c.setScaleX(1.6f);
             c.setScaleY(1.6f);
-            c.setPadding(5, 5, 5, 5);
+            c.setPadding(10, 5, 5, 5);
 
             c.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
                 @Override
@@ -200,11 +204,13 @@ public class ShoppingList {
             t.setText(ingredients.get(i));
             t.setTextSize(20.0f);
             t.setPadding(5, 5, 5, 5);
+            t.setTextColor(context.getResources().getColor(R.color.own_red));
 
             TextView m = new TextView(context);
             m.setText("[" + measures.get(i) + "]");
             m.setTextSize(20.0f);
             m.setPadding(5, 5, 5, 5);
+            m.setTextColor(context.getResources().getColor(R.color.own_red));
 
             layout.setTag(ingredients.get(i));
             layout.addView(imageView);

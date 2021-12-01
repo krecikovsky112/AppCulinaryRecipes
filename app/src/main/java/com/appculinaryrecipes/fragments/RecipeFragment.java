@@ -134,7 +134,7 @@ public class RecipeFragment extends Fragment {
         YouTubePlayerView youTubePlayerView = new YouTubePlayerView(getActivity());
         youTubePlayerView.setPadding(0,0,0,60);
         youTubePlayerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(1300,1000));
+        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1000));
         fragmentRecipeBinding.container.addView(youTubePlayerView);
 
         String result = substringURLVideoToVideoId(urlVideo);

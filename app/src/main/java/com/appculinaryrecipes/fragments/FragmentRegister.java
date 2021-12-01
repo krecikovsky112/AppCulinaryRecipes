@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +75,9 @@ public class FragmentRegister extends Fragment {
                     user.put("email",registerFragmentBinding.inputEmailText.getText().toString());
                     user.put("password",registerFragmentBinding.editTextPassword.getText().toString());
                     user.put("listsLeft", 10);
+                    ArrayList<String> favourites = new ArrayList<>();
+                    user.put("favourites",favourites);
+
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
