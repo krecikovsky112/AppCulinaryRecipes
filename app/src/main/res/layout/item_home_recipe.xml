@@ -71,7 +71,10 @@
                         android:paddingBottom="0dp"
                         android:transformPivotX="0dp"
                         android:transformPivotY="30dp"
-                        android:isIndicator="false"
+                        android:isIndicator="true"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         />
 
                 </TableRow>
