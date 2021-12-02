@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
 import com.appculinaryrecipes.fragments.AddRecipeFragment;
+import com.appculinaryrecipes.fragments.FridgeFragment;
 import com.appculinaryrecipes.fragments.HomeFragment;
 import com.appculinaryrecipes.fragments.ShoppingListsFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.creator:
                         checkUser();
                         fragment = new AddRecipeFragment();
+                        break;
+                    case R.id.fridge:
+                        checkUser();
+                        fragment = new FridgeFragment();
                         break;
                     case R.id.home:
                         fragment = new HomeFragment();
