@@ -69,6 +69,7 @@ public class ShoppingListsFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error == null){
+                    shoppingLists.clear();
                     for (QueryDocumentSnapshot document : value) {
                         ShoppingList shoppingList = new ShoppingList();
                         shoppingList.setMealName(document.getString("meal"));

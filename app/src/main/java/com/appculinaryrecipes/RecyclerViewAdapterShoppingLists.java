@@ -62,8 +62,7 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
 
         holder.itemView.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(null, getUser());
-            fragment.setShoppingListId(shoppingList.getShoppingListUid());
+            ShoppingListDetailsFragment fragment = new ShoppingListDetailsFragment(shoppingList.getShoppingListUid());
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, fragment).addToBackStack("ok").commit();
         });
     }

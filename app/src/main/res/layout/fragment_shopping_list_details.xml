@@ -29,13 +29,17 @@
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
            >
-                <LinearLayout
-                    android:background="#ffefef"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    android:id="@+id/constraintLayout"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:background="#ffefef"
+                            android:padding="10dp"
+                            android:orientation="vertical"
+                            android:id="@+id/constraintLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                </ScrollView>
         </androidx.cardview.widget.CardView>
 
 

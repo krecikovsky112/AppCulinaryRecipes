@@ -33,6 +33,8 @@ public class ShoppingListDetailsFragment extends Fragment {
     private String userId;
     private String shoppingListId;
 
+    private boolean exists;
+
     private ShoppingList shoppingList;
 
     FragmentShoppingListDetailsBinding fragmentShoppingListDetailsBinding;
@@ -41,7 +43,13 @@ public class ShoppingListDetailsFragment extends Fragment {
 
     }
 
+    public ShoppingListDetailsFragment(String shoppingListId){
+        this.exists = true;
+        this.shoppingListId = shoppingListId;
+    }
+
     public ShoppingListDetailsFragment(String recipeId, String userId){
+        this.exists = false;
         this.recipeId = recipeId;
         this.userId = userId;
     }
@@ -61,13 +69,11 @@ public class ShoppingListDetailsFragment extends Fragment {
         fragmentShoppingListDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_shopping_list_details, container, false);
         View view = fragmentShoppingListDetailsBinding.getRoot();
         shoppingList = new ShoppingList(fragmentShoppingListDetailsBinding, getContext());
-        shoppingList.setShoppingListUid(shoppingListId);
-        shoppingList.newInstance(recipeId, userId);
+        if(exists)
+            shoppingList.getInstance(shoppingListId);
+        else
+            shoppingList.newInstance(recipeId, userId);
         return view;
-    }
-
-    public void setShoppingListId(String id){
-        this.shoppingListId = id;
     }
 
 }
