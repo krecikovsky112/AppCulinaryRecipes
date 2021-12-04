@@ -2,6 +2,7 @@ package com.appculinaryrecipes.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
 import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -82,6 +86,20 @@ public class RecipeFragment extends Fragment {
         View view = fragmentRecipeBinding.getRoot();
 
         fragmentRecipeBinding.titleRecipe.setText(title);
+        if(imageURL.equals(("images/" + id))){
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getReference().child(imageURL);
+            storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        Picasso.get().load(task.getResult().toString()).into(fragmentRecipeBinding.imageRecipe);
+                    }
+                }
+            });
+
+        }
+        else
         Picasso.get().load(imageURL).into(fragmentRecipeBinding.imageRecipe);
 
         getInfoRecipe();

@@ -36,9 +36,9 @@ import java.util.Map;
 
 public class SearchFragment extends Fragment {
 
-    public List<String> categories = new LinkedList<>(Arrays.asList("Beef", "Breakfast", "Chicken", "Dessert", "Goat", "Lamb",
+    public final static List<String> categories = new LinkedList<>(Arrays.asList("Beef", "Breakfast", "Chicken", "Dessert", "Goat", "Lamb",
             "Miscellaneous", "Pasta", "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian"));
-    public List<String> areas = new LinkedList<>(Arrays.asList("American", "British", "Canadian", "Chinese", "Croatian",
+    public final static List<String> areas = new LinkedList<>(Arrays.asList("American", "British", "Canadian", "Chinese", "Croatian",
             "Dutch", "Egyptian", "French", "Greek", "Indian", "Irish", "Italian", "Jamaican", "Japanese", "Kenyan",
             "Malaysian", "Mexican", "Moroccan", "Polish", "Portuguese", "Russian", "Spanish", "Thai", "Tunisian", "Turkish", "Unknown", "Vietnamese"));
 
@@ -116,7 +116,7 @@ public class SearchFragment extends Fragment {
 
         selectedArea = "American";
         selectedCategory = "Beef";
-        getRecipeByAreaAndCategory(selectedArea, selectedCategory)
+        Functions.getRecipeByAreaAndCategory(selectedArea, selectedCategory)
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {

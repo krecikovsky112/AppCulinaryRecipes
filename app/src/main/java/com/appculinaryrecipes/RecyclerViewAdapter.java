@@ -1,16 +1,22 @@
 package com.appculinaryrecipes;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media2.MediaLibraryService2;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appculinaryrecipes.fragments.RecipeFragment;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -42,7 +48,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecipeViewHolder recipeViewHolder = (RecipeViewHolder) holder;
         Recipe recipe = recipeArrayList.get(position);
         recipeViewHolder.recipeTitle.setText(recipe.getMeal());
-        Glide.with(context).load(recipe.getMealThumb()).into(recipeViewHolder.recipeImageView);
+        if(recipe.getMealThumb().equals(("images/" + recipe.getId()))){
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getReference().child(recipe.getMealThumb());
+            storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        Glide.with(context).load(task.getResult().toString()).into(recipeViewHolder.recipeImageView);
+                    }
+                }
+            });
+        }
+        else
+            Glide.with(context).load(recipe.getMealThumb()).into(recipeViewHolder.recipeImageView);
         recipeViewHolder.rating.setNumStars(NUMBER_STARS);
         recipeViewHolder.rating.setRating(Float.parseFloat(recipe.getRating()));
         recipeViewHolder.areaCategory.setText("Area: " + recipe.getArea() + "   Category: " + recipe.getCategory());

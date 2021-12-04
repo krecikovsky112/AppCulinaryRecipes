@@ -4,7 +4,7 @@
     app:cnb_unselectedColor="#fff">
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title=""
         android:icon="@drawable/home"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
@@ -12,7 +12,7 @@
         />
     <item
         android:id="@+id/creator"
-        android:title="Creator"
+        android:title=""
         android:icon="@drawable/pencil"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
@@ -20,7 +20,7 @@
         />
     <item
         android:id="@+id/fridge"
-        android:title="Fridge"
+        android:title=""
         android:icon="@drawable/fridge"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
@@ -28,7 +28,7 @@
         />
     <item
         android:id="@+id/search"
-        android:title="Search"
+        android:title=""
         android:icon="@drawable/search"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
@@ -36,7 +36,7 @@
         />
     <item
         android:id="@+id/favorites"
-        android:title="Favorites"
+        android:title=""
         android:icon="@drawable/heart"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
@@ -44,7 +44,7 @@
         />
     <item
         android:id="@+id/shopping_lists"
-        android:title="ShLists"
+        android:title=""
         android:icon="@drawable/list"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"

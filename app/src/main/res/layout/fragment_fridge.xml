@@ -35,7 +35,7 @@
                     android:text="Find recipes"
                     android:textSize="12dp"
                     android:textColor="@color/white"
-                    android:background="#AE0216"/>
+                    android:background="@color/own_red"/>
 
                 <TextView
                     android:text="Your ingredients"
@@ -84,7 +84,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="5dp"
                             android:inputType="text"
-                            android:textColor="#AE0216"
+                            android:textColor="@color/own_red"
                             android:background="@color/white"
                             android:hint="contains"
                             />
@@ -93,7 +93,7 @@
                             android:id="@+id/containsButton"
                             android:layout_width="60dp"
                             android:textColor="@color/white"
-                            android:background="#AE0216"
+                            android:background="@color/own_red"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"

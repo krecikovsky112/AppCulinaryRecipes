@@ -97,9 +97,8 @@ public class ShoppingList {
                         else{
                             checked = new ArrayList<>();
                             for(int i = 0; i < ingredients.size(); i++){
-
+                                checked.add(false);
                             }
-                         checked.add(false);
                         }
                         userUid = userId;
                         mealName = String.valueOf(document.getData().get("meal"));
@@ -112,6 +111,29 @@ public class ShoppingList {
                 }
             });
 
+    }
+
+    protected void getInstance(String documentId){
+        shoppingListUid = documentId;
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection(DB_RECIPE_DOCUMENT_NAME).document(documentId);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    ingredients = (ArrayList<String>) document.get("ingredients");
+                    measures = (ArrayList<String>) document.get("measure");
+                    checked = (ArrayList<Boolean>) document.get("checked");
+                    userUid = String.valueOf(document.getData().get("user"));
+                    mealName = String.valueOf(document.getData().get("meal"));
+                    System.out.println(mealName);
+                    System.out.println(userUid);
+                    System.out.println(ingredients.toString());
+                    displayList();
+                }
+            }
+        });
     }
 
     private void updateDatabase(int update){
@@ -189,6 +211,7 @@ public class ShoppingList {
             c.setScaleX(1.6f);
             c.setScaleY(1.6f);
             c.setPadding(10, 5, 5, 5);
+            c.setChecked(checked.get(i));
 
             c.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
                 @Override
