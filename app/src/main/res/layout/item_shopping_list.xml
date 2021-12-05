@@ -48,7 +48,7 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/name_shopping_list"
-                android:layout_width="match_parent"
+                android:layout_width="228dp"
                 android:layout_height="match_parent"
                 android:textSize="40sp"
                 android:fontFamily="@font/dongle_regular"
@@ -56,6 +56,13 @@
                 android:textColor="@color/own_red"/>
 
         </LinearLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="310dp"
+            android:background="@drawable/bin"
+            />
     </androidx.cardview.widget.CardView>
 </layout>

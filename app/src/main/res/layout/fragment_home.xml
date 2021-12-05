@@ -16,6 +16,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp">
+
     <Button
         android:id="@+id/goToSearchFragmentButton"
         android:layout_width="match_parent"
@@ -24,9 +25,9 @@
         android:layout_marginEnd="100dp"
         android:background="@drawable/button_login"
         android:drawableStart="@android:drawable/ic_menu_search"
-        android:textAlignment="center"
-        android:text="FILTERS"
         android:fontFamily="@font/dongle_regular"
+        android:text="FILTERS"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="30sp" />
 </RelativeLayout>

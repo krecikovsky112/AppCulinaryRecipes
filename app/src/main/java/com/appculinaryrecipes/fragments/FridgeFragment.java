@@ -1,6 +1,7 @@
 package com.appculinaryrecipes.fragments;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +10,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -94,23 +97,30 @@ public class FridgeFragment extends Fragment {
                 displayIngredients(ingredients);
             }
         });
-        fragmentFridgeBinding.containsButton.setOnClickListener(new View.OnClickListener() {
+
+        fragmentFridgeBinding.containsEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                String search = fragmentFridgeBinding.containsEditText.getText().toString();
-                if(!search.isEmpty())
-                    displayIngredients(filterList(ingredients, search));
-                else
-                    displayIngredients(ingredients);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String search = fragmentFridgeBinding.containsEditText.getText().toString();
+                    if (!search.isEmpty())
+                        displayIngredients(filterList(ingredients, search));
+                    else
+                        displayIngredients(ingredients);
+
+                    return true;
+                }
+                return false;
             }
         });
+
+
         fragmentFridgeBinding.generateRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showFoundRecipes();
             }
         });
-        addListIsEmptyText();
         return view;
     }
 
@@ -145,6 +155,7 @@ public class FridgeFragment extends Fragment {
         layout.setPadding(10, 10, 10, 10);
 
         CheckBox c = new CheckBox(context);
+        c.setButtonTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.own_red)));
         c.setTag(ingredient);
         c.setScaleX(1.6f);
         c.setScaleY(1.6f);
@@ -160,6 +171,7 @@ public class FridgeFragment extends Fragment {
                     innerLayout.setTag(ingredient);
 
                     CheckBox c = new CheckBox(context);
+                    c.setButtonTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.own_red)));
                     c.setTag(ingredient);
                     c.setScaleX(1.6f);
                     c.setScaleY(1.6f);
@@ -178,6 +190,7 @@ public class FridgeFragment extends Fragment {
                     });
 
                     TextView t = new TextView(context);
+                    t.setTextColor(context.getResources().getColor(R.color.own_red));
                     t.setText(ingredient);
                     t.setTextSize(20.0f);
                     t.setPadding(5, 5, 5, 5);
@@ -185,17 +198,12 @@ public class FridgeFragment extends Fragment {
                     innerLayout.addView(c);
                     innerLayout.addView(t);
 
-                    if(fragmentFridgeBinding.yourIngredients.getChildCount() == 3)
-                        removeListIsEmptyText();
                     fragmentFridgeBinding.yourIngredients.addView(innerLayout);
                 }
                 else{
                     View view = fragmentFridgeBinding.yourIngredients.findViewWithTag(ingredient);
                     if(view != null){
                         fragmentFridgeBinding.yourIngredients.removeView(view);
-                        if(fragmentFridgeBinding.yourIngredients.getChildCount() == 2){
-                            addListIsEmptyText();
-                        }
                     }
                 }
                 fragmentFridgeBinding.yourIngredients.invalidate();
@@ -214,19 +222,6 @@ public class FridgeFragment extends Fragment {
         return layout;
     }
 
-    void addListIsEmptyText(){
-        TextView textView = new TextView(context);
-        textView.setText("This list is empty!");
-        textView.setTextSize(15.0f);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTag("ListIsEmptyTag");
-        fragmentFridgeBinding.yourIngredients.addView(textView);
-    }
-
-    void removeListIsEmptyText(){
-        View view = fragmentFridgeBinding.yourIngredients.findViewWithTag("ListIsEmptyTag");
-        fragmentFridgeBinding.yourIngredients.removeView(view);
-    }
 
     ArrayList<String> getCheckedIngredients(){
         ArrayList<String> result = new ArrayList<>();

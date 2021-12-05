@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appculinaryrecipes.fragments.RecipeFragment;
+import com.appculinaryrecipes.fragments.ShoppingListsFragment;
 import com.appculinaryrecipes.shoppinglist.ShoppingList;
 import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,6 +61,24 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
         shoppingListViewHolder.shoppinglistNameTextView.setText(shoppingList.getMealName());
         shoppingListViewHolder.number.setText(counter + ".");
         counter++;
+
+        shoppingListViewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("shopping_lists").document(shoppingList.getShoppingListUid()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        System.out.println("DocumentSnapshot successfully deleted!");
+                        ShoppingListsFragment myFragment = new ShoppingListsFragment();
+                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                        activity.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentHomeContainer,
+                                        myFragment).commit();
+                    }
+                }).addOnFailureListener(e -> System.out.println("Error deleting document" + e));
+            }
+        });
 
         holder.itemView.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();

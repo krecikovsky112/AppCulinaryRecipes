@@ -27,14 +27,6 @@
         app:cnb_textColor="#ffefef"
         />
     <item
-        android:id="@+id/search"
-        android:title=""
-        android:icon="@drawable/search"
-        app:cnb_backgroundColor="#ae0216"
-        app:cnb_iconColor="#ffefef"
-        app:cnb_textColor="#ffefef"
-        />
-    <item
         android:id="@+id/favorites"
         android:title=""
         android:icon="@drawable/heart"
