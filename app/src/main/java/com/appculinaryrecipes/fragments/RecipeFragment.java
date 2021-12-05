@@ -94,21 +94,20 @@ public class RecipeFragment extends Fragment {
         View view = fragmentRecipeBinding.getRoot();
 
         fragmentRecipeBinding.titleRecipe.setText(title);
-        if(imageURL.equals(("images/" + id))){
+        if (imageURL.equals(("images/" + id))) {
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
             StorageReference storageReference = firebaseStorage.getReference().child(imageURL);
             storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Picasso.get().load(task.getResult().toString()).into(fragmentRecipeBinding.imageRecipe);
                     }
                 }
             });
 
-        }
-        else
-        Picasso.get().load(imageURL).into(fragmentRecipeBinding.imageRecipe);
+        } else
+            Picasso.get().load(imageURL).into(fragmentRecipeBinding.imageRecipe);
 
         getInfoRecipe();
         getInfoFav();
@@ -123,16 +122,15 @@ public class RecipeFragment extends Fragment {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     ArrayList<String> favourites = (ArrayList<String>) document.get("favourites");
-                    if(favourites.contains(id)){
+                    if (favourites.contains(id)) {
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
-                    }else{
+                    } else {
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
                     }
-                }
-                else {
+                } else {
                     Log.w("ERROR", "get failed with " + task.getException());
                 }
             }
@@ -183,20 +181,20 @@ public class RecipeFragment extends Fragment {
         setTitle("Video");
 
         YouTubePlayerView youTubePlayerView = new YouTubePlayerView(getActivity());
-        youTubePlayerView.setPadding(0,0,0,60);
+        youTubePlayerView.setPadding(0, 0, 0, 60);
         youTubePlayerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1000));
+        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
         fragmentRecipeBinding.container.addView(youTubePlayerView);
 
         String result = substringURLVideoToVideoId(urlVideo);
         getLifecycle().addObserver(youTubePlayerView);
         String finalResult = result;
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                @Override
-                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                    youTubePlayer.cueVideo(finalResult,0);
-                }
-            });
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.cueVideo(finalResult, 0);
+            }
+        });
     }
 
     @Nullable
@@ -205,8 +203,8 @@ public class RecipeFragment extends Fragment {
         char[] temp = urlVideo.toCharArray();
         String result = null;
         for (int i = temp.length - 1; i > 0; i--)
-            if (temp[i] == '='){
-                result = urlVideo.substring(i+1, temp.length);
+            if (temp[i] == '=') {
+                result = urlVideo.substring(i + 1, temp.length);
             }
         return result;
     }
@@ -215,7 +213,7 @@ public class RecipeFragment extends Fragment {
         Typeface face = ResourcesCompat.getFont(getActivity(), R.font.dongle_regular);
         TextView textView = new TextView(getActivity());
         textView.setTextSize(40);
-        textView.setPadding(0,50,0,0);
+        textView.setPadding(0, 50, 0, 0);
         textView.setTextColor(Color.parseColor("#ae0216"));
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setTypeface(face);
@@ -236,7 +234,7 @@ public class RecipeFragment extends Fragment {
         fragmentRecipeBinding.container.addView(textView);
     }
 
-    public void onClickLike(){
+    public void onClickLike() {
 
         String userUID = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -246,28 +244,28 @@ public class RecipeFragment extends Fragment {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     ArrayList<String> favourites = (ArrayList<String>) documentSnapshot.get("favourites");
-                    if(favourites.contains(id)){
+                    if (favourites.contains(id)) {
                         favourites.remove(id);
                         Map<String, Object> updates = new HashMap<>();
                         updates.put("favourites", favourites);
                         documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(getActivity(),"deleted",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
-                    }else{
+                    } else {
                         Map<String, Object> updates = new HashMap<>();
                         favourites.add(id);
                         updates.put("favourites", favourites);
                         documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(getActivity(),"added",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "added", Toast.LENGTH_SHORT).show();
                             }
                         });
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
@@ -277,14 +275,14 @@ public class RecipeFragment extends Fragment {
         });
     }
 
-    private String getUser(){
+    private String getUser() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         return firebaseUser.getUid();
     }
 
 
-    public void onClickGenerateList(){
+    public void onClickGenerateList() {
         String userUid = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection("users").document(userUid);
@@ -302,12 +300,11 @@ public class RecipeFragment extends Fragment {
                         //TODO przejście do listy list
                         Toast.makeText(getActivity().getApplicationContext(), "Limit reached!", Toast.LENGTH_LONG);
                     }
-                }
-                else
+                } else
                     Toast.makeText(getActivity().getApplicationContext(), "User error!", Toast.LENGTH_LONG);
             }
         });
-        }
+    }
 }
 
 

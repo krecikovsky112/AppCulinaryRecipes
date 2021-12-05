@@ -46,7 +46,6 @@ public class FavouritesFragment extends Fragment {
     private String key = null;
     private DocumentSnapshot lastResult = null;
     private FragmentFavouritesBinding fragmentFavouritesBinding;
-    private Button button;
     private ArrayList<String> favourites = new ArrayList<>();
 
     public FavouritesFragment() {
@@ -69,7 +68,6 @@ public class FavouritesFragment extends Fragment {
         View view = fragmentFavouritesBinding.getRoot();
         recyclerView = fragmentFavouritesBinding.favouritesRecyclerView;
         swipeRefreshLayout = fragmentFavouritesBinding.favouritesSwipeRefreshLayout;
-        //button = fragmentFavouritesBinding.goToSearchFragmentButton;
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -110,9 +108,9 @@ public class FavouritesFragment extends Fragment {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    if(doc.exists()){
+                    if (doc.exists()) {
                         favourites = (ArrayList<String>) doc.get("favourites");
                     }
                 }
@@ -138,7 +136,7 @@ public class FavouritesFragment extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Map<String, Object> data = document.getData();
                             String id = document.getId();
-                            if(favourites.contains(id)){
+                            if (favourites.contains(id)) {
                                 String meal = (String) data.get("meal");
                                 String mealThumb = (String) data.get("mealThumb");
 
@@ -147,9 +145,9 @@ public class FavouritesFragment extends Fragment {
                                     recipe.setMealThumb(mealThumb);
                                     recipe.setMeal(meal);
                                     recipe.setId(id);
-                                    recipe.setArea((String)data.get("area"));
-                                    recipe.setCategory((String)data.get("category"));
-                                    recipe.setRating((String)data.get("rating"));
+                                    recipe.setArea((String) data.get("area"));
+                                    recipe.setCategory((String) data.get("category"));
+                                    recipe.setRating((String) data.get("rating"));
                                     recipeArrayList.add(recipe);
                                 }
                             }
@@ -159,11 +157,8 @@ public class FavouritesFragment extends Fragment {
                         if (favourites.size() > 0) {
                             recyclerViewAdapter.setItems(recipeArrayList);
                             recyclerViewAdapter.notifyDataSetChanged();
-                            lastResult = task.getResult().getDocuments().get(task.getResult().size()- 1);
-                        }else{
-
+                            lastResult = task.getResult().getDocuments().get(task.getResult().size() - 1);
                         }
-
                         isLoading = false;
                         swipeRefreshLayout.setRefreshing(false);
                     } else {
@@ -171,7 +166,8 @@ public class FavouritesFragment extends Fragment {
                     }
                 });
     }
-    private String getUser(){
+
+    private String getUser() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         return firebaseUser.getUid();
