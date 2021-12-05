@@ -119,7 +119,7 @@ public class RecipeFragment extends Fragment {
     private void getInfoFav() {
         String userUID = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = database.collection("users").document(userUID);
+        DocumentReference documentReference = database.collection("favourites").document(userUID);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -240,7 +240,7 @@ public class RecipeFragment extends Fragment {
 
         String userUID = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = database.collection("users").document(userUID);
+        DocumentReference documentReference = database.collection("favourites").document(userUID);
 
 
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
