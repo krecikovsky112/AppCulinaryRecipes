@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.ActivityMainBinding;
 import com.appculinaryrecipes.fragments.AddRecipeFragment;
+import com.appculinaryrecipes.fragments.FavouritesFragment;
 import com.appculinaryrecipes.fragments.FridgeFragment;
 import com.appculinaryrecipes.fragments.HomeFragment;
 import com.appculinaryrecipes.fragments.ShoppingListsFragment;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.shopping_lists:
                         fragment = new ShoppingListsFragment();
+                        break;
+                    case R.id.favourites:
+                        fragment = new FavouritesFragment();
                         break;
                     default:
                         fragment = new HomeFragment();
