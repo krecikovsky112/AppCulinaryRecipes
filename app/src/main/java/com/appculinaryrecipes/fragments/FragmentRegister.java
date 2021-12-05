@@ -75,13 +75,21 @@ public class FragmentRegister extends Fragment {
                     user.put("email",registerFragmentBinding.inputEmailText.getText().toString());
                     user.put("password",registerFragmentBinding.editTextPassword.getText().toString());
                     user.put("listsLeft", 10);
-                    ArrayList<String> favourites = new ArrayList<>();
-                    user.put("favourites",favourites);
+//                    ArrayList<String> favourites = new ArrayList<>();
+//                    user.put("favourites",favourites);
 
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Log.d("TAG","onSuccess: user Profile is created for " + userID);
+                        }
+                    });
+                    DocumentReference favourites = fstore.collection("favourites").document(userID);
+                    Map<String, Object> fav = new HashMap<>();
+                    favourites.set(fav).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
                         }
                     });
                 }
