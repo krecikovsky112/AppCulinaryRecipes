@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appculinaryrecipes.R;
+import com.appculinaryrecipes.Recipe;
 import com.appculinaryrecipes.databinding.FragmentRecipeBinding;
 import com.appculinaryrecipes.shoppinglist.ShoppingListDetailsFragment;
 import com.bumptech.glide.Glide;
@@ -33,6 +34,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -57,6 +59,7 @@ public class RecipeFragment extends Fragment {
     private FragmentRecipeBinding fragmentRecipeBinding;
     private ArrayList<String> ingriedients;
     private ArrayList<String> measures;
+    private ArrayList<String> favourites = new ArrayList<>();
     private boolean flagButtonLike = false;
 
     public RecipeFragment() {
@@ -116,13 +119,14 @@ public class RecipeFragment extends Fragment {
     private void getInfoFav() {
         String userUID = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = database.collection("favourites").document(userUID);
+        DocumentReference documentReference = database.collection("users").document(userUID);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
-                    if(document.contains(id)){
+                    ArrayList<String> favourites = (ArrayList<String>) document.get("favourites");
+                    if(favourites.contains(id)){
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
                     }else{
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
@@ -232,12 +236,11 @@ public class RecipeFragment extends Fragment {
         fragmentRecipeBinding.container.addView(textView);
     }
 
-    //TODO: Trzeba dodać tutaj zapamiętywanie stanu czy dany przepis jest w ulubionych czy nie
     public void onClickLike(){
 
         String userUID = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = database.collection("favourites").document(userUID);
+        DocumentReference documentReference = database.collection("users").document(userUID);
 
 
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -245,9 +248,11 @@ public class RecipeFragment extends Fragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    if(documentSnapshot.contains(id)){
+                    ArrayList<String> favourites = (ArrayList<String>) documentSnapshot.get("favourites");
+                    if(favourites.contains(id)){
+                        favourites.remove(id);
                         Map<String, Object> updates = new HashMap<>();
-                        updates.put(id, FieldValue.delete());
+                        updates.put("favourites", favourites);
                         documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -257,7 +262,8 @@ public class RecipeFragment extends Fragment {
                         fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
                     }else{
                         Map<String, Object> updates = new HashMap<>();
-                        updates.put(id, true);
+                        favourites.add(id);
+                        updates.put("favourites", favourites);
                         documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -276,6 +282,7 @@ public class RecipeFragment extends Fragment {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         return firebaseUser.getUid();
     }
+
 
     public void onClickGenerateList(){
         String userUid = getUser();
