@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.protobuf.Enum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context context;
@@ -60,7 +62,7 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
         ShoppingList shoppingList = shoppingListArrayList.get(position);
         shoppingListViewHolder.shoppinglistNameTextView.setText(shoppingList.getMealName());
         shoppingListViewHolder.number.setText(counter + ".");
-        counter++;
+
 
         shoppingListViewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +72,24 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
                     @Override
                     public void onSuccess(Void unused) {
                         System.out.println("DocumentSnapshot successfully deleted!");
-                        ShoppingListsFragment myFragment = new ShoppingListsFragment();
                         AppCompatActivity activity = (AppCompatActivity) v.getContext();
+
+                        counter--;
+                        Map<String,Object> user = new HashMap<>();
+                        user.put("listsLeft",10 - counter);
+                        db.collection("users").document(getUser()).update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(activity,"Values added!",Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(activity,"Error!",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                        ShoppingListsFragment myFragment = new ShoppingListsFragment();
                         activity.getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentHomeContainer,
                                         myFragment).commit();
@@ -79,6 +97,8 @@ public class RecyclerViewAdapterShoppingLists extends RecyclerView.Adapter<Recyc
                 }).addOnFailureListener(e -> System.out.println("Error deleting document" + e));
             }
         });
+        if(counter<shoppingListArrayList.size())
+            counter++;
 
         holder.itemView.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
