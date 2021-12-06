@@ -27,7 +27,6 @@
         app:cnb_textColor="#ffefef"
         />
     <item
-    <item
         android:id="@+id/favourites"
         android:title="Favorites"
         android:icon="@drawable/heart"
