@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentShoppingListDetailsBinding;
+import com.appculinaryrecipes.fragments.ShoppingListsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

@@ -13,10 +13,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.databinding.FragmentShoppingListDetailsBinding;
+import com.appculinaryrecipes.fragments.ShoppingListsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

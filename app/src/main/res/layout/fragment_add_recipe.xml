@@ -177,7 +177,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/addIngredientButton1"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
@@ -185,25 +185,26 @@
                     android:layout_marginStart="50dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
+                    android:background="@drawable/button_login"
+                    android:backgroundTint="@color/own_red"
                     android:text="chosen"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/own_red"/>
+                    android:textColor="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/addIngredientButton2"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toEndOf="@+id/addIngredientButton1"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="50dp"
-                    android:text="empty"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/own_red"/>
+                    android:background="@drawable/button_login"
+                    android:backgroundTint="@color/own_red"
+                    android:text="empty"
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
 
@@ -238,8 +239,8 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="95dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginStart="95dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="50dp"
                     android:layout_marginRight="50dp"
