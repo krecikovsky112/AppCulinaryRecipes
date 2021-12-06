@@ -27,7 +27,8 @@
         app:cnb_textColor="#ffefef"
         />
     <item
-        android:id="@+id/favorites"
+    <item
+        android:id="@+id/favourites"
         android:title="Favorites"
         android:icon="@drawable/heart"
         app:cnb_backgroundColor="#ae0216"
@@ -36,7 +37,7 @@
         />
     <item
         android:id="@+id/shopping_lists"
-        android:title=""
+        android:title="Lists"
         android:icon="@drawable/list"
         app:cnb_backgroundColor="#ae0216"
         app:cnb_iconColor="#ffefef"
