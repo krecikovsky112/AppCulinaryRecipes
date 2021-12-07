@@ -281,7 +281,6 @@ public class RecipeFragment extends Fragment {
         return firebaseUser.getUid();
     }
 
-
     public void onClickGenerateList() {
         String userUid = getUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
