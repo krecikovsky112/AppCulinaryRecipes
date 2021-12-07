@@ -226,7 +226,7 @@ public class FridgeFragment extends Fragment {
     ArrayList<String> getCheckedIngredients(){
         ArrayList<String> result = new ArrayList<>();
         int size = fragmentFridgeBinding.yourIngredients.getChildCount();
-        for(int i = 2; i < size; i++){
+        for(int i = 0; i < size; i++){
             result.add(String.valueOf(fragmentFridgeBinding.yourIngredients.getChildAt(i).getTag()));
         }
         return result;
