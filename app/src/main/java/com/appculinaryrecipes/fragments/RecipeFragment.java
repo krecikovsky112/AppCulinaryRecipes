@@ -125,10 +125,12 @@ public class RecipeFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     ArrayList<String> favourites = (ArrayList<String>) document.get("favourites");
-                    if (favourites.contains(id)) {
-                        fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
-                    } else {
-                        fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                    if (favourites != null) {
+                        if (favourites.contains(id)) {
+                            fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
+                        } else {
+                            fragmentRecipeBinding.favBtn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                        }
                     }
                 } else {
                     Log.w("ERROR", "get failed with " + task.getException());
@@ -183,7 +185,7 @@ public class RecipeFragment extends Fragment {
         YouTubePlayerView youTubePlayerView = new YouTubePlayerView(getActivity());
         youTubePlayerView.setPadding(0, 0, 0, 60);
         youTubePlayerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
+        youTubePlayerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
         fragmentRecipeBinding.container.addView(youTubePlayerView);
 
         String result = substringURLVideoToVideoId(urlVideo);

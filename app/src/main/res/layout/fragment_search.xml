@@ -25,12 +25,13 @@
                     android:weightSum="0">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="10dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="0dp"
                         android:layout_weight="0.35"
                         android:gravity="center"
                         android:text="@string/textViewArea"
+                        android:textColor="@color/own_red"
                         android:textStyle="bold" />
 
                     <TextView
@@ -40,6 +41,7 @@
                         android:layout_weight="0.35"
                         android:gravity="center"
                         android:text="@string/textviewCategory"
+                        android:textColor="@color/own_red"
                         android:textStyle="bold" />
 
                     <TextView
@@ -52,11 +54,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:weightSum="1">
+                    android:weightSum="0.95">
 
                     <org.angmarch.views.NiceSpinner
                         android:id="@+id/area_spinner"
-                        android:layout_width="0dp"
+                        android:layout_width="20dp"
                         android:layout_marginEnd="10dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.35" />
@@ -65,17 +67,18 @@
                         android:id="@+id/category_spinner"
                         android:layout_width="0dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:background="@color/purple_500"
                         android:layout_weight="0.35" />
 
                     <Button
                         android:id="@+id/button_search"
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="10dp"
+                        android:layout_gravity="center"
+                        android:layout_height="40dp"
                         android:layout_weight="0.22"
                         android:drawableStart="@android:drawable/ic_menu_search"
-                        android:text="Search"
+                        android:text="Filter"
                         android:textSize="12dp"
                         android:textColor="@color/white"
                         android:background="@drawable/button_login"

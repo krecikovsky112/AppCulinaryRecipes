@@ -97,6 +97,7 @@ public class SearchFragment extends Fragment {
         selectedArea = areas.get(0);
 
         areaSpinner.attachDataSource(areas);
+        areaSpinner.setSelectedIndex(18);
         areaSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
             @Override
             public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
@@ -107,6 +108,7 @@ public class SearchFragment extends Fragment {
 
         NiceSpinner categorySpinner = (NiceSpinner) fragmentSearchBinding.categorySpinner;
         categorySpinner.attachDataSource(categories);
+        categorySpinner.setSelectedIndex(2);
         categorySpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
             @Override
             public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
@@ -114,8 +116,8 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        selectedArea = "American";
-        selectedCategory = "Beef";
+        selectedArea = "Polish";
+        selectedCategory = "Chicken";
         Functions.getRecipeByAreaAndCategory(selectedArea, selectedCategory)
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override

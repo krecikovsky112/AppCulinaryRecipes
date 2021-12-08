@@ -1,5 +1,6 @@
 package com.appculinaryrecipes.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.appculinaryrecipes.R;
 import com.appculinaryrecipes.Recipe;
 import com.appculinaryrecipes.RecyclerViewAdapter;
+import com.appculinaryrecipes.activities.AuthActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -40,6 +44,7 @@ public class HomeFragment extends Fragment {
     private DocumentSnapshot lastResult = null;
     private FragmentHomeBinding fragmentHomeBinding;
     private Button button;
+    private FirebaseAuth firebaseAuth;
 
     public HomeFragment() {
     }
@@ -63,6 +68,7 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout = fragmentHomeBinding.homeSwipeRefreshLayout;
         button = fragmentHomeBinding.goToSearchFragmentButton;
         recyclerView.setHasFixedSize(true);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -86,13 +92,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        fragmentHomeBinding.logout.setOnClickListener(v -> {
+            firebaseAuth.signOut();
+            checkUser();
+        });
+
         button.setOnClickListener(v -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            SearchFragment myFragment= new SearchFragment();
+            SearchFragment myFragment = new SearchFragment();
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHomeContainer, myFragment).addToBackStack("HOME_FRAGMENT").commit();
         });
 
         return view;
+    }
+
+    private void checkUser() {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            startActivity(new Intent(getActivity(), AuthActivity.class));
+        }
     }
 
     private void leadData() {
@@ -112,7 +130,7 @@ public class HomeFragment extends Fragment {
                     .limit(PAGE_ITEM_SIZE);
         }
 
-        
+
         query
                 .get()
                 .addOnCompleteListener(task -> {
@@ -127,9 +145,9 @@ public class HomeFragment extends Fragment {
                                 recipe.setMealThumb(mealThumb);
                                 recipe.setMeal(meal);
                                 recipe.setId(id);
-                                recipe.setArea((String)data.get("area"));
-                                recipe.setCategory((String)data.get("category"));
-                                recipe.setRating((String)data.get("rating"));
+                                recipe.setArea((String) data.get("area"));
+                                recipe.setCategory((String) data.get("category"));
+                                recipe.setRating((String) data.get("rating"));
                                 recipeArrayList.add(recipe);
                             }
                         }

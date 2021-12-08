@@ -175,9 +175,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/addIngredientButton1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
@@ -186,13 +186,12 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/button_login"
-                    android:backgroundTint="@color/own_red"
-                    android:text="chosen"
+                    android:src="@drawable/ic_baseline_add_24"
                     android:textColor="@color/white" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/addIngredientButton2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
@@ -201,8 +200,8 @@
                     android:layout_marginEnd="50dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_baseline_check_box_outline_blank_24"
                     android:background="@drawable/button_login"
-                    android:backgroundTint="@color/own_red"
                     android:text="empty"
                     android:textColor="@color/white" />
 

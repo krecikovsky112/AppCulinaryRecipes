@@ -25,7 +25,7 @@
             android:layout_alignParentEnd="true"
 
             android:layout_marginStart="20dp"
-            android:layout_marginTop="270dp"
+            android:layout_marginTop="240dp"
             android:layout_marginEnd="20dp"
             android:hint="fullname"
 
@@ -175,7 +175,7 @@
             android:layout_height="329dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="-20dp"
             android:layout_marginEnd="0dp"
             app:srcCompat="@drawable/logo" />
 
